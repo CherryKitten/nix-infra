@@ -9,7 +9,7 @@
   imports = [
     ./graphical.nix
     ./security.nix
-    ../users
+    ./users.nix
     ./yubikey.nix
     ./virtualization.nix
   ];
