@@ -3,6 +3,7 @@
     enable = true;
 
     interactiveShellInit = ''
+      set -g fish_greeting
       export GPG_TTY="$(tty)"
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
@@ -12,6 +13,7 @@
     shellAliases = {
         g = "git";
       };
+
   };
 
   home.file = {
