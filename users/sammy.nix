@@ -3,7 +3,7 @@
 
   programs.git = {
     userName = "CherryKitten";
-    userEmail = "git@cherrykitten.dev";
+    userEmail = "sammy@cherrykitten.dev";
     signing.key = "0xC01A7CBBA617BD5F";
     signing.signByDefault = true;
   };
