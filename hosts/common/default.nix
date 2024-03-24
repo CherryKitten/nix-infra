@@ -37,18 +37,8 @@
     fonts = {
       enableDefaultPackages = true;
       packages = with pkgs; [
-        noto-fonts
-        noto-fonts-cjk
         noto-fonts-emoji
-        monaspace
-        nerdfonts
       ];
-      fontconfig = {
-        defaultFonts.emoji = [ "Noto Emoji" ];
-        defaultFonts.serif = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSans Nerd Font" ];
-        defaultFonts.sansSerif = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSerif Nerd Font" ];
-        defaultFonts.monospace = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" ];
-      };
     };
 
     # Packages used on all systems
