@@ -8,6 +8,10 @@
       gpgconf --launch gpg-agent
       gpg-connect-agent updatestartuptty /bye > /dev/null
     '';
+
+    shellAliases = {
+        g = "git";
+      };
   };
 
   home.file = {
