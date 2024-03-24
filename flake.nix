@@ -48,20 +48,27 @@
     {
       inherit lib;
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
-      colmena = {
-        meta = {
-          description = "All my NixoS machines";
-          specialArgs = { inherit inputs outputs; };
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
-            overlays = [ ];
+
+      devShells = forAllSystems (system:
+        let pkgs = import nixpkgs { system = system; }; in
+        { default = pkgs.mkShell { nativeBuildInputs = with pkgs; [ nix colmena git ]; }; });
+
+      colmena =
+        {
+          meta = {
+            description = "All my NixoS machines";
+            specialArgs = { inherit inputs outputs; };
+            nixpkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ ];
+            };
           };
+
+          bengal = mkHost { hostname = "bengal"; };
+
+          maine-coon = mkHost { hostname = "maine-coon"; };
         };
 
-        bengal = mkHost { hostname = "bengal"; };
-
-        maine-coon = mkHost { hostname = "maine-coon"; };
-      };
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
