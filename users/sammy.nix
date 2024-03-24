@@ -1,5 +1,5 @@
 { ... }: {
-  imports = [ ../default.nix ];
+  imports = [ ./common ];
 
   programs.git = {
     userName = "CherryKitten";

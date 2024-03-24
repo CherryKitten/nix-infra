@@ -42,7 +42,7 @@
         };
 
         defaults = { lib, config, name, ... }: {
-          imports = [ ./hosts/${name}/configuration.nix ./modules/nixos/common.nix (import "${home-manager}/nixos") ];
+          imports = [ ./hosts/${name} ./hosts/common (import "${home-manager}/nixos") ];
 
           deployment = {
             targetUser = "sammy";
@@ -53,6 +53,8 @@
             inherit inputs outputs;
             pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
           };
+
+          cherrykitten.hostname = name;
         };
 
         bengal = { };
@@ -63,7 +65,7 @@
         test = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./modules/nixos/common.nix ./hosts/test-vm/configuration.nix (import "${home-manager}/nixos") ];
+          modules = [ ./hosts/test-vm ./hosts/common (import "${home-manager}/nixos") ];
         };
       } // colmenaHive.nodes;
 
@@ -73,7 +75,7 @@
           mkHome = { user ? "sammy", hostname ? null }:
             lib.homeManagerConfiguration {
               inherit pkgs;
-              modules = [ ./modules/home/users/${user}.nix ] ++ lib.optional (!isNull hostname) ./modules/home/hosts/${hostname}.nix;
+              modules = [ ./users/${user}.nix ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}.nix");
               extraSpecialArgs = {
                 inherit inputs outputs;
                 pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };

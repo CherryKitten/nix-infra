@@ -1,5 +1,10 @@
 { lib, pkgs, ... }: {
-  options.cherrykitten.common = {
+  options.cherrykitten = {
+    hostname = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "the hostname, this is already set for every host by the flake config";
+    };
     test = lib.mkOption {
       type = lib.types.str;
       default = "nya";
