@@ -5,6 +5,9 @@
     enable = true;
     banner = "nyanya :3";
     logLevel = "VERBOSE";
+    extraConfig = ''
+      StreamLocalBindUnlink yes
+      '';
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;

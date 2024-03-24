@@ -8,5 +8,5 @@ require("conform").setup({
 		["*"] = { "codespell" },
 	},
 	log_level = vim.log.levels.ERROR,
-  notify_on_error = true,
+	notify_on_error = true,
 })

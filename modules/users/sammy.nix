@@ -12,8 +12,8 @@
     bat
     lsd
     gnupg
-    kitty
     tmux
+    colmena
   ];
 
   programs = {

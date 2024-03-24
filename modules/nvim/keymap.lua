@@ -37,6 +37,9 @@ map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsea
 -- save file
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
+-- quit all
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
@@ -89,6 +92,6 @@ map("n", "<leader>be",
 
 map({"n", "v"}, "<leader>cf",
 	function()
-		require("conform").format()
+	require("conform").format({ async = true, lsp_fallback = true, range = range })
 	end, { desc = "Format Code" }
 )

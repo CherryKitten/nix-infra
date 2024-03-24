@@ -43,7 +43,7 @@
 
       {
         plugin = catppuccin-nvim;
-        config = "colorscheme catppuccin";
+        config = "colorscheme catppuccin-mocha";
       }
 
       {
