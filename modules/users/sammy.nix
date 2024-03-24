@@ -32,7 +32,7 @@
       };
     };
 
-    nushell = {
+    fish = {
       enable = true;
     };
   };
