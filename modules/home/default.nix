@@ -5,5 +5,6 @@
     ./tmux.nix
     ./starship.nix
     ./git.nix
+    ./kitty.nix
   ];
 }
