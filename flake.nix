@@ -67,17 +67,22 @@
         };
       } // colmenaHive.nodes;
 
-      homeConfigurations.sammy =
+      homeConfigurations =
         let
           pkgs = import nixpkgs { system = "x86_64-linux"; };
+          mkHome = { user ? "sammy", hostname ? null }:
+            lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [ ./modules/users/${user}.nix ] ++ lib.optional (!isNull hostname) ./modules/home/hosts/${hostname}.nix;
+              extraSpecialArgs = {
+                inherit inputs outputs;
+                pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+              };
+            };
         in
-        lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./modules/users/sammy.nix ];
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
-          };
+        {
+          sammy = mkHome { };
+          "sammy@chansey" = mkHome { hostname = "chansey"; };
         };
     };
 }
