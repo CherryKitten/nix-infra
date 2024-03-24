@@ -5,14 +5,12 @@
   ...
 }: {
   imports = [
-    ../../users
-    ./home.nix
+    ../users
+    ./security.nix
     ./yubikey.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  services.openssh.enable = true;
-  networking.firewall.allowedTCPPorts = [22];
 
   time.timeZone = "Europe/Berlin";
 
