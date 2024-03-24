@@ -7,7 +7,7 @@
   cfg = config.cherrykitten.common;
 in {
   imports = [
-    ../users
+    ./users.nix
     ./security.nix
     ./yubikey.nix
     ../graphical
