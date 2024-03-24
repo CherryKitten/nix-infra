@@ -1,9 +1,12 @@
-{ lib, config, pkgs, ... }: {
-
-
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   home-manager.useGlobalPkgs = true;
   home-manager.users.sammy = {
-    imports = [ ./neovim.nix ];
+    imports = [./nvim];
     home.username = "sammy";
     home.homeDirectory = "/home/sammy";
     home.stateVersion = "23.11"; # Please read the comment before changing.
@@ -12,6 +15,7 @@
       lsd
       gnupg
       kitty
+      tmux
     ];
 
     programs = {
@@ -24,11 +28,10 @@
         signing.key = "0xC01A7CBBA617BD5F";
         signing.signByDefault = true;
         extraConfig = {
-          init = { defaultBranch = "main"; };
-          core = { editor = "nvim"; };
+          init = {defaultBranch = "main";};
+          core = {editor = "nvim";};
           pull.rebase = true;
         };
-
       };
 
       nushell = {

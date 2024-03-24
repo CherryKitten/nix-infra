@@ -67,3 +67,28 @@ map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+
+-- NeoTree
+map("n", "<leader>fe",
+	function()
+  	require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+  end, { desc = "NeoTree" }
+)
+map("n", "<leader>e", "<leader>fe", { desc = "NeoTree", remap = true })
+
+map("n", "<leader>ge",
+	function()
+		require("neo-tree.command").execute({ source = "git_status", toggle = true })
+	end, { desc = "Git explorer" }
+)
+map("n", "<leader>be",
+	function()
+		require("neo-tree.command").execute({ source = "buffers", toggle = true })
+	end, { desc = "Buffer explorer" }
+)
+
+map({"n", "v"}, "<leader>cf",
+	function()
+		require("conform").format()
+	end, { desc = "Format Code" }
+)
