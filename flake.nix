@@ -24,7 +24,7 @@
     }: {
       imports = [
         ./hosts/${hostname}/configuration.nix
-        ./modules/common.nix
+        ./modules/nixos/common.nix
         (import "${home-manager}/nixos")
       ];
 

@@ -16,7 +16,7 @@ in {
   imports = [
     ./graphical.nix
     ./security.nix
-    ./users
+    ../users
     ./yubikey.nix
   ];
 
