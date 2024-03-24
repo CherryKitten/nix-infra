@@ -1,10 +1,12 @@
-{ pkgs, config, lib, ... }:
-let
-  cfg = config.cherrykitten;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.cherrykitten;
+in {
+  options.cherrykitten = {};
 
-  options.cherrykitten = { };
-
-  config = { };
+  config = {};
 }

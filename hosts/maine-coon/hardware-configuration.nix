@@ -7,7 +7,6 @@
   pkgs,
   ...
 }: {
-
   boot.initrd.availableKernelModules = ["ahci" "nvme"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];

@@ -7,7 +7,7 @@
     logLevel = "VERBOSE";
     extraConfig = ''
       StreamLocalBindUnlink yes
-      '';
+    '';
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
