@@ -3,8 +3,6 @@
 
   services.openssh = {
     enable = true;
-    banner = "nyanya :3";
-    logLevel = "VERBOSE";
     extraConfig = ''
       StreamLocalBindUnlink yes
     '';
