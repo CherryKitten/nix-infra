@@ -58,7 +58,6 @@
         };
 
         bengal = { };
-        maine-coon = { };
       };
 
       nixosConfigurations = {
