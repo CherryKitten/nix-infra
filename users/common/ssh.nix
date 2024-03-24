@@ -26,9 +26,9 @@
         identitiesOnly = true;
       };
 
-      "maine-coon" = {
-        host = "maine-coon";
-        hostname = "159.69.71.253";
+      "ocelot" = {
+        host = "ocelot";
+        hostname = "128.140.109.125";
         identityFile = "~/.ssh/yubikey.pub";
         identitiesOnly = true;
         remoteForwards = [
