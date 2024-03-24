@@ -51,7 +51,7 @@
 
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { system = system; }; in
-        { default = pkgs.mkShell { nativeBuildInputs = with pkgs; [ nix colmena git ]; }; });
+        { default = pkgs.mkShell { nativeBuildInputs = with pkgs; [ nix colmena git pkgs.home-manager ]; }; });
 
       colmena =
         {
@@ -80,5 +80,15 @@
           (import "${home-manager}/nixos")
         ];
       };
+
+      homeConfigurations.sammy =
+        let
+          pkgs = import nixpkgs { system = "x86_64-linux"; };
+        in
+        lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./modules/users/sammy.nix ];
+        };
+
     };
 }
