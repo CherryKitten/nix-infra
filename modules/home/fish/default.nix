@@ -4,6 +4,7 @@
 
     interactiveShellInit = ''
       set -g fish_greeting
+      set -g fish_key_bindings fish_vi_key_bindings
       export GPG_TTY="$(tty)"
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
@@ -14,16 +15,5 @@
       g = "git";
     };
 
-  };
-
-  home.file = {
-    fish_prompt = {
-      source = ./fish_prompt.fish;
-      target = ".config/fish/functions/fish_prompt.fish";
-    };
-    fish_right_prompt = {
-      source = ./fish_right_prompt.fish;
-      target = ".config/fish/functions/fish_right_prompt.fish";
-    };
   };
 }

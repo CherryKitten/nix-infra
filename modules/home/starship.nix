@@ -8,6 +8,7 @@
         "[│](bold green)$username$hostname:$directory"
         "$line_break"
         "[└─>](bold green)"
+        "$character"
       ];
       username = {
         style_user = "red bold";
@@ -35,6 +36,15 @@
         format = lib.concatStrings [ "[\\[" "$symbol" "$common_meaning" "$signal_name" "$maybe_int" "\\]]" "($style)" ];
         map_symbol = true;
         disabled = false;
+      };
+
+      character = {
+        success_symbol = "[❯](bold green)";
+        error_symbol = "[X](bold red)";
+        vimcmd_symbol = "[N](bold green)";
+        vimcmd_replace_one_symbol = "[R](bold purple)";
+        vimcmd_replace_symbol = "[R](bold purple)";
+        vimcmd_visual_symbol	= "[V](bold yellow)";
       };
 
       right_format = lib.concatStrings [
@@ -113,7 +123,6 @@
         "$os"
         "$container"
         "$shell"
-        "$character"
       ];
     };
   };
