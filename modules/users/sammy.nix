@@ -34,6 +34,14 @@
 
     fish = {
       enable = true;
+      functions = {};
+    };
+  };
+
+  home.file = {
+    fish_prompt = {
+      source = ../fish/fish_prompt.fish;
+      target = ".config/fish/functions/fish_prompt.fish";
     };
   };
 
