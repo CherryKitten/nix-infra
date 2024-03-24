@@ -10,6 +10,9 @@
       stylua
       # Telescope
       ripgrep
+      ansible-language-server
+      nil
+      nixpkgs-fmt
     ];
 
     plugins = with pkgs.vimPlugins; [
