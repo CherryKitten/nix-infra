@@ -1,102 +1,123 @@
-{ config
-, pkgs
-, inputs
-, ...
-}: {
-  programs.neovim =
-    let
-      toLua = str: "lua << EOF\n${str}\nEOF\n";
-      toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-    in
-    {
-      enable = true;
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
+{
+  programs.neovim = {
+    enable = true;
+    package = pkgs-unstable.neovim-unwrapped;
+    extraPackages = with pkgs; [
+      # LazyVim
+      lua-language-server
+      stylua
+      # Telescope
+      ripgrep
+    ];
 
-      extraPackages = with pkgs; [
-        lua-language-server
-        rnix-lsp
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
+    ];
 
-        xclip
-        wl-clipboard
-
-        rustfmt
-        black
-        isort
-        alejandra
-        prettierd
-        codespell
-        stylua
-      ];
-
-      plugins = with pkgs.vimPlugins; [
-        plenary-nvim
-        persistence-nvim
-        nvim-web-devicons
-        nui-nvim
-
-        {
-          plugin = comment-nvim;
-          config = toLua "require(\"Comment\").setup()";
-        }
-
-        {
-          plugin = catppuccin-nvim;
-          config = "colorscheme catppuccin-mocha";
-        }
-
-        {
-          plugin = which-key-nvim;
-          config = toLua "require(\"which-key\").setup()";
-        }
-
-        {
-          plugin = neo-tree-nvim;
-          config = toLuaFile ./plugins/neo-tree.lua;
-        }
-
-        {
-          plugin = conform-nvim;
-          config = toLuaFile ./plugins/conform.lua;
-        }
-
-        {
-          plugin = dressing-nvim;
-          config = toLua "require(\"dressing\").setup()";
-        }
-
-        {
-          plugin = bufferline-nvim;
-          config = toLua "require(\"bufferline\").setup()";
-        }
-
-        {
-          plugin = lualine-nvim;
-          config = toLua "require(\"lualine\").setup()";
-        }
-
-        {
-          plugin = indent-blankline-nvim;
-          config = toLua "require(\"ibl\").setup()";
-        }
-        {
-          plugin = noice-nvim;
-          config = toLuaFile ./plugins/noice.lua;
-        }
-        {
-          plugin = dashboard-nvim;
-          config = toLuaFile ./plugins/dashboard.lua;
-        }
-
-        nvim-notify
-        vim-nix
-      ];
-
-      extraLuaConfig = ''
-        ${builtins.readFile ./options.lua}
-        ${builtins.readFile ./keymap.lua}
+    extraLuaConfig =
+      let
+        plugins = with pkgs.vimPlugins; [
+          # LazyVim
+          LazyVim
+          bufferline-nvim
+          cmp-buffer
+          cmp-nvim-lsp
+          cmp-path
+          cmp_luasnip
+          conform-nvim
+          dashboard-nvim
+          dressing-nvim
+          flash-nvim
+          friendly-snippets
+          gitsigns-nvim
+          indent-blankline-nvim
+          lualine-nvim
+          neo-tree-nvim
+          neoconf-nvim
+          neodev-nvim
+          noice-nvim
+          nui-nvim
+          nvim-cmp
+          nvim-lint
+          nvim-lspconfig
+          nvim-notify
+          nvim-spectre
+          nvim-treesitter
+          nvim-treesitter-context
+          nvim-treesitter-textobjects
+          nvim-ts-autotag
+          nvim-ts-context-commentstring
+          nvim-web-devicons
+          persistence-nvim
+          plenary-nvim
+          telescope-fzf-native-nvim
+          telescope-nvim
+          todo-comments-nvim
+          tokyonight-nvim
+          trouble-nvim
+          vim-illuminate
+          vim-startuptime
+          which-key-nvim
+          { name = "LuaSnip"; path = luasnip; }
+          { name = "catppuccin"; path = catppuccin-nvim; }
+          { name = "mini.ai"; path = mini-nvim; }
+          { name = "mini.bufremove"; path = mini-nvim; }
+          { name = "mini.comment"; path = mini-nvim; }
+          { name = "mini.indentscope"; path = mini-nvim; }
+          { name = "mini.pairs"; path = mini-nvim; }
+          { name = "mini.surround"; path = mini-nvim; }
+        ];
+        mkEntryFromDrv = drv:
+          if lib.isDerivation drv then
+            { name = "${lib.getName drv}"; path = drv; }
+          else
+            drv;
+        lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
+      in
+      ''
+        require("lazy").setup({
+          defaults = {
+            lazy = true,
+          },
+          dev = {
+            -- reuse files from pkgs.vimPlugins.*
+            path = "${lazyPath}",
+            patterns = { "." },
+            -- fallback to download
+            fallback = true,
+          },
+          spec = {
+            { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+            -- The following configs are needed for fixing lazyvim on nix
+            -- force enable telescope-fzf-native.nvim
+            { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+            -- disable mason.nvim, use programs.neovim.extraPackages
+            { "williamboman/mason-lspconfig.nvim", enabled = false },
+            { "williamboman/mason.nvim", enabled = false },
+            -- import/override with your plugins
+            { import = "plugins" },
+            -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
+            { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
+          },
+        })
       '';
-    };
+  };
+
+  # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+  xdg.configFile."nvim/parser".source =
+    let
+      parsers = pkgs.symlinkJoin {
+        name = "treesitter-parsers";
+        paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+          c
+          lua
+        ])).dependencies;
+      };
+    in
+    "${parsers}/parser";
+
+  # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
+  xdg.configFile."nvim/lua".source = ./lua;
 }

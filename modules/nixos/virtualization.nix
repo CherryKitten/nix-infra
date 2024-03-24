@@ -7,6 +7,6 @@
       cores = 6;
       graphics = true;
     };
-    users.users.sammy.password = "test";
+    users.users.sammy.initialPassword = "test";
   };
 }

@@ -20,14 +20,6 @@
       forEachSystem = f: lib.genAttrs systems (system: f);
       forAllSystems = lib.genAttrs systems;
       lib = nixpkgs.lib // home-manager.lib;
-      mkHost = { hostname, user ? "sammy", }: {
-        imports = [ ./hosts/${hostname}/configuration.nix ./modules/nixos/common.nix (import "${home-manager}/nixos") ];
-
-        deployment = {
-          targetUser = user;
-          allowLocalDeployment = true;
-        };
-      };
     in
     rec {
       inherit lib;
@@ -36,18 +28,38 @@
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { system = system; }; in
         {
-          default = pkgs.mkShell { nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.git pkgs.home-manager ]; };
+          default = pkgs.mkShell {
+            nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.git pkgs.home-manager pkgs.nixos-rebuild ];
+            shellHook = "exec $SHELL";
+          };
         });
 
       colmenaHive = colmena.lib.makeHive {
         meta = {
           description = "All my NixoS machines";
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+          };
           nixpkgs = import nixpkgs { system = "x86_64-linux"; };
         };
 
-        bengal = mkHost { hostname = "bengal"; };
-        maine-coon = mkHost { hostname = "maine-coon"; };
+        defaults = { lib, config, name, ... }: {
+          imports = [ ./hosts/${name}/configuration.nix ./modules/nixos/common.nix (import "${home-manager}/nixos") ];
+
+          deployment = {
+            targetUser = "sammy";
+            allowLocalDeployment = true;
+          };
+
+          home-manager.extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+          };
+        };
+
+        bengal = { };
+        maine-coon = { };
       };
 
       nixosConfigurations = {
@@ -64,6 +76,10 @@
         lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./modules/users/sammy.nix ];
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+          };
         };
     };
 }
