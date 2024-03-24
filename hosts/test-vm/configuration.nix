@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }: {
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ../../modules/common
     ../../modules/graphical
@@ -9,12 +13,12 @@
 
   users.users.admin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
     password = "admin";
     group = "admin";
   };
 
-  users.groups.admin = { };
+  users.groups.admin = {};
 
   virtualisation.vmVariant = {
     # following configuration is added only when building VM with build-vm
@@ -30,7 +34,7 @@
     settings.PasswordAuthentication = lib.mkForce true;
   };
 
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [22];
   environment.systemPackages = with pkgs; [
     htop
   ];

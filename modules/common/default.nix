@@ -1,12 +1,11 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-let
-  cfg = config.cherrykitten.common;
-in
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.cherrykitten.common;
+in {
   imports = [
     ../users
     ./security.nix
@@ -23,7 +22,7 @@ in
   };
 
   config = {
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = ["nix-command" "flakes"];
 
     time.timeZone = "Europe/Berlin";
 
@@ -44,10 +43,10 @@ in
         nerdfonts
       ];
       fontconfig = {
-        defaultFonts.emoji = [ "Noto Emoji" ];
-        defaultFonts.serif = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSans Nerd Font" ];
-        defaultFonts.sansSerif = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSerif Nerd Font" ];
-        defaultFonts.monospace = [ "Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" ];
+        defaultFonts.emoji = ["Noto Emoji"];
+        defaultFonts.serif = ["Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSans Nerd Font"];
+        defaultFonts.sansSerif = ["Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font" "NotoSerif Nerd Font"];
+        defaultFonts.monospace = ["Monaspace Xenon" "FiraCode Nerd Font" "Hack Nerd Font"];
       };
     };
 

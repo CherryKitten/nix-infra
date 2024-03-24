@@ -17,19 +17,6 @@
     }:
     let
       system = "x86_64-linux";
-      mkHost = hostname: {
-        imports = [
-          ./hosts/${hostname}/configuration.nix
-          ./modules/common
-          (import "${home-manager}/nixos")
-        ];
-
-        deployment = {
-          targetUser = "root";
-          targetHost = hostname;
-          allowLocalDeployment = true;
-        };
-      };
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
@@ -41,7 +28,30 @@
           };
         };
 
-        bengal = mkHost "bengal";
+        bengal = { name, nodes, pkgs, ... }: {
+          imports = [
+            ./hosts/${name}/configuration.nix
+            ./modules/common
+            (import "${home-manager}/nixos")
+          ];
+
+          deployment = {
+            targetUser = "sammy";
+            allowLocalDeployment = true;
+          };
+        };
+
+        maine-coon = { name, nodes, pkgs, ... }: {
+          imports = [
+            ./hosts/${name}/configuration.nix
+            ./modules/common
+            (import "${home-manager}/nixos")
+          ];
+          deployment = {
+            targetHost = "maine-coon";
+            allowLocalDeployment = true;
+          };
+        };
       };
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
         inherit system;
