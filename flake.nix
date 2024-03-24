@@ -9,57 +9,69 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    ...
-  }: let
-    inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-    mkHost = {
-      hostname,
-      user ? "sammy",
-    }: {
-      imports = [
-        ./hosts/${hostname}/configuration.nix
-        ./modules/nixos/common.nix
-        (import "${home-manager}/nixos")
+  outputs =
+    inputs @ { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , home-manager
+    , ...
+    }:
+    let
+      inherit (self) outputs;
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
       ];
+      forEachSystem = f: lib.genAttrs systems (system: f);
+      forAllSystems = lib.genAttrs systems;
+      lib = nixpkgs.lib // home-manager.lib;
+      mkHost =
+        { hostname
+        , user ? "sammy"
+        ,
+        }: {
+          imports = [
+            ./hosts/${hostname}/configuration.nix
+            ./modules/nixos/common.nix
+            (import "${home-manager}/nixos")
+          ];
 
-      deployment = {
-        targetUser = user;
-        allowLocalDeployment = true;
-      };
-    };
-  in {
-    inherit lib;
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    colmena = {
-      meta = {
-        description = "All my NixoS machines";
-        specialArgs = {inherit inputs outputs;};
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [];
+          deployment = {
+            targetUser = user;
+            allowLocalDeployment = true;
+          };
         };
-      };
+    in
+    {
+      inherit lib;
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      colmena = {
+        meta = {
+          description = "All my NixoS machines";
+          specialArgs = { inherit inputs outputs; };
+          nixpkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [ ];
+          };
+        };
 
-      bengal = mkHost {hostname = "bengal";};
+        bengal = mkHost { hostname = "bengal"; };
 
-      maine-coon = mkHost {hostname = "maine-coon";};
-    };
-    nixosConfigurations.test = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        flake = self;
+        maine-coon = mkHost { hostname = "maine-coon"; };
       };
-      modules = [
-        ./modules
-        ./hosts/test-vm/configuration.nix
-        (import "${home-manager}/nixos")
-      ];
+      nixosConfigurations.test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          flake = self;
+        };
+        modules = [
+          ./modules
+          ./hosts/test-vm/configuration.nix
+          (import "${home-manager}/nixos")
+        ];
+      };
     };
-  };
 }

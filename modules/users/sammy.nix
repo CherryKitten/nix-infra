@@ -1,5 +1,5 @@
-{...}: {
-  imports = [../home];
+{ ... }: {
+  imports = [ ../home ];
 
   programs.git = {
     userName = "CherryKitten";

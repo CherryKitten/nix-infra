@@ -1,10 +1,9 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
-  imports = [./fish ./nvim];
+  imports = [ ./fish ./nvim ];
   home.packages = with pkgs; [
     bat
     lsd
@@ -19,8 +18,8 @@
     git = {
       enable = true;
       extraConfig = {
-        init = {defaultBranch = "main";};
-        core = {editor = "nvim";};
+        init = { defaultBranch = "main"; };
+        core = { editor = "nvim"; };
         pull.rebase = true;
       };
     };

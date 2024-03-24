@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   imports = [
     # Include the results of the hardware scan.
@@ -31,7 +30,7 @@
     address = "fe80::1";
     interface = "enp0s31f6";
   };
-  networking.nameservers = ["8.8.8.8"];
+  networking.nameservers = [ "8.8.8.8" ];
 
   # Initial empty root password for easy login:
   services.openssh.permitRootLogin = lib.mkForce "prohibit-password";

@@ -1,11 +1,12 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs
+, config
+, lib
+, ...
+}:
+let
   cfg = config.cherrykitten.graphical;
-in {
+in
+{
   options.cherrykitten.graphical = {
     enable = lib.mkEnableOption (lib.mdDoc "graphical stuffs");
   };
