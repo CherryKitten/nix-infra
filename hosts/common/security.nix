@@ -37,6 +37,11 @@
       wheelNeedsPassword = false;
       keepTerminfo = true;
     };
+
+    acme = {
+      acceptTerms = true;
+      defaults.email = "admin@cherrykitten.dev";
+    };
   };
 
   services.fail2ban = {

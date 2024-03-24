@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./hardware-configuration.nix
+    ./gotosocial.nix
   ];
 
   networking.hostName = "maine-coon";
