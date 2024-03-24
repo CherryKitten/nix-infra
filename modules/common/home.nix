@@ -1,7 +1,9 @@
 { lib, config, pkgs, ... }: {
 
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.sammy = {
+    imports = [ ./neovim.nix ];
     home.username = "sammy";
     home.homeDirectory = "/home/sammy";
     home.stateVersion = "23.11"; # Please read the comment before changing.
@@ -32,8 +34,6 @@
       nushell = {
         enable = true;
       };
-
-
     };
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
