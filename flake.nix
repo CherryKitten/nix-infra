@@ -11,13 +11,14 @@
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }:
     let
-      mkHost = hostname: {
+      mkHost = hostname: graphical: {
         imports = [
           ./hosts/${hostname}/configuration.nix
           ./modules/common
           (import "${home-manager}/nixos")
-
+          (if graphical then ./modules/graphical else null)
         ];
+
         deployment = {
           targetUser = "root";
           targetHost = hostname;
@@ -35,7 +36,7 @@
           };
         };
 
-        bengal = mkHost "bengal";
+        bengal = mkHost "bengal" true;
 
       };
     };
