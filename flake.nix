@@ -10,40 +10,21 @@
   };
 
   outputs =
-    inputs @ { self
-    , nixpkgs
-    , nixpkgs-unstable
-    , home-manager
-    , ...
-    }:
+    inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, ... }:
     let
       inherit (self) outputs;
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
+      systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
       forEachSystem = f: lib.genAttrs systems (system: f);
       forAllSystems = lib.genAttrs systems;
       lib = nixpkgs.lib // home-manager.lib;
-      mkHost =
-        { hostname
-        , user ? "sammy"
-        ,
-        }: {
-          imports = [
-            ./hosts/${hostname}/configuration.nix
-            ./modules/nixos/common.nix
-            (import "${home-manager}/nixos")
-          ];
+      mkHost = { hostname, user ? "sammy", }: {
+        imports = [ ./hosts/${hostname}/configuration.nix ./modules/nixos/common.nix (import "${home-manager}/nixos") ];
 
-          deployment = {
-            targetUser = user;
-            allowLocalDeployment = true;
-          };
+        deployment = {
+          targetUser = user;
+          allowLocalDeployment = true;
         };
+      };
     in
     {
       inherit lib;
@@ -51,34 +32,25 @@
 
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { system = system; }; in
-        { default = pkgs.mkShell { nativeBuildInputs = with pkgs; [ nix colmena git pkgs.home-manager ]; }; });
-
-      colmena =
         {
-          meta = {
-            description = "All my NixoS machines";
-            specialArgs = { inherit inputs outputs; };
-            nixpkgs = import nixpkgs {
-              system = "x86_64-linux";
-              overlays = [ ];
-            };
-          };
+          default = pkgs.mkShell { nativeBuildInputs = with pkgs; [ nix colmena git pkgs.home-manager ]; };
+        });
 
-          bengal = mkHost { hostname = "bengal"; };
-
-          maine-coon = mkHost { hostname = "maine-coon"; };
+      colmena = {
+        meta = {
+          description = "All my NixoS machines";
+          specialArgs = { inherit inputs outputs; };
+          nixpkgs = import nixpkgs { system = "x86_64-linux"; };
         };
+
+        bengal = mkHost { hostname = "bengal"; };
+        maine-coon = mkHost { hostname = "maine-coon"; };
+      };
 
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          flake = self;
-        };
-        modules = [
-          ./modules
-          ./hosts/test-vm/configuration.nix
-          (import "${home-manager}/nixos")
-        ];
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./modules ./hosts/test-vm/configuration.nix (import "${home-manager}/nixos") ];
       };
 
       homeConfigurations.sammy =
@@ -89,6 +61,5 @@
           inherit pkgs;
           modules = [ ./modules/users/sammy.nix ];
         };
-
     };
 }
