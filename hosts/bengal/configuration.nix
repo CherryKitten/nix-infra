@@ -12,6 +12,8 @@
     ./hardware-configuration.nix
   ];
 
+  cherrykitten.graphical.enable = true;
+
   boot.loader.systemd-boot.enable = true;
 
   networking.hostName = "bengal";
