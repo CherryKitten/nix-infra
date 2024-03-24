@@ -11,8 +11,8 @@
     '';
 
     shellAliases = {
-        g = "git";
-      };
+      g = "git";
+    };
 
   };
 

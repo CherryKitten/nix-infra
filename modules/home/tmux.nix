@@ -1,5 +1,4 @@
-{ pkgs, config, lib, ... }: {
-
+{ ... }: {
   programs.tmux = {
     enable = true;
 
@@ -25,6 +24,6 @@
       set-option -sa terminal-features ',kitty:RGB'
     '';
 
-      };
-  }
+  };
+}
 

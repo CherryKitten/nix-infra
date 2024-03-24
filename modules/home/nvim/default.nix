@@ -1,6 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
-
-{
+{ lib, pkgs, pkgs-unstable, ... }: {
   programs.neovim = {
     enable = true;
     package = pkgs-unstable.neovim-unwrapped;
@@ -22,7 +20,6 @@
     extraLuaConfig =
       let
         plugins = with pkgs.vimPlugins; [
-          # LazyVim
           LazyVim
           bufferline-nvim
           cmp-buffer

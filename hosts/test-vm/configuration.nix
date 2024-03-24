@@ -1,26 +1,4 @@
-{ config
-, lib
-, pkgs
-, ...
-}: {
-  users.users.admin = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    password = "admin";
-    group = "admin";
-  };
-
-  users.groups.admin = { };
-
-  virtualisation.vmVariant = {
-    # following configuration is added only when building VM with build-vm
-    virtualisation = {
-      memorySize = 8192;
-      cores = 6;
-      graphics = true;
-    };
-  };
-
+{ lib, pkgs, ... }: {
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = lib.mkForce true;

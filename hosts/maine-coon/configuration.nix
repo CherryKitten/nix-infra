@@ -1,10 +1,5 @@
-{ config
-, pkgs
-, lib
-, ...
-}: {
+{ ... }: {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -31,9 +26,6 @@
     interface = "enp0s31f6";
   };
   networking.nameservers = [ "8.8.8.8" ];
-
-  # Initial empty root password for easy login:
-  services.openssh.permitRootLogin = lib.mkForce "prohibit-password";
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZyQSZw+pExsx2RXB+yxbaJGB9mtvudbQ/BP7E1yKvr openpgp:0x6068FEBB"

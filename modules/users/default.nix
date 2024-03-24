@@ -1,8 +1,4 @@
-{ pkgs
-, config
-, lib
-, ...
-}:
+{ pkgs, config, lib, ... }:
 let
   cfg = config.cherrykitten.users;
 in

@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-{
+{ ... }: {
   virtualisation.vmVariant = {
     # following configuration is added only when building VM with build-vm
     virtualisation = {

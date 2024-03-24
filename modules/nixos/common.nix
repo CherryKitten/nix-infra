@@ -1,12 +1,4 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-let
-  cfg = config.cherrykitten.common;
-in
-{
+{ lib, pkgs, ... }: {
   options.cherrykitten.common = {
     test = lib.mkOption {
       type = lib.types.str;

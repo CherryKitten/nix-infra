@@ -12,12 +12,10 @@
     };
   };
 
-  outputs =
-    inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, colmena, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, colmena, ... }:
     let
       inherit (self) outputs;
       systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      forEachSystem = f: lib.genAttrs systems (system: f);
       forAllSystems = lib.genAttrs systems;
       lib = nixpkgs.lib // home-manager.lib;
     in
@@ -26,8 +24,7 @@
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
       devShells = forAllSystems (system:
-        let pkgs = import nixpkgs { system = system; }; in
-        {
+        let pkgs = import nixpkgs { system = system; }; in {
           default = pkgs.mkShell {
             nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.git pkgs.home-manager pkgs.nixos-rebuild ];
             shellHook = "exec $SHELL";
@@ -69,6 +66,7 @@
           modules = [ ./modules/nixos/common.nix ./hosts/test-vm/configuration.nix (import "${home-manager}/nixos") ];
         };
       } // colmenaHive.nodes;
+
       homeConfigurations.sammy =
         let
           pkgs = import nixpkgs { system = "x86_64-linux"; };
