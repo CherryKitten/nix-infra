@@ -14,4 +14,15 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  programs.gpg = {
+    enable = true;
+    publicKeys = [
+      {
+        source = ../cherrykitten.pgp;
+        trust = "ultimate";
+      }
+
+    ];
+  };
 }
