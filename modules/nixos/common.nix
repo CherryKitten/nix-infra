@@ -19,6 +19,7 @@ in
     ./security.nix
     ../users
     ./yubikey.nix
+    ../virtualization.nix
   ];
 
   config = {
