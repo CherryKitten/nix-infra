@@ -3,7 +3,7 @@
     ./hardware-configuration.nix
   ];
 
-  cherrykitten.graphical.enable = true;
+  cherrykitten.graphical = true;
 
   boot.loader.systemd-boot.enable = true;
 
