@@ -22,7 +22,6 @@ in
     };
 
     home-manager.users.sammy = {
-      imports = [ ../nvim ];
       home.username = "sammy";
       home.homeDirectory = "/home/sammy";
       home.stateVersion = "23.11"; # Please read the comment before changing.
@@ -50,21 +49,6 @@ in
           };
         };
 
-        fish = {
-          enable = true;
-          functions = { };
-        };
-      };
-
-      home.file = {
-        fish_prompt = {
-          source = ../../files/config/fish/functions/fish_prompt.fish;
-          target = ".config/fish/functions/fish_prompt.fish";
-        };
-        fish_right_prompt = {
-          source = ../../files/config/fish/functions/fish_right_prompt.fish;
-          target = ".config/fish/functions/fish_right_prompt.fish";
-        };
       };
 
       home.sessionVariables = {

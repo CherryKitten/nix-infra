@@ -6,13 +6,6 @@
 }: let
   cfg = config.cherrykitten.common;
 in {
-  imports = [
-    ./users.nix
-    ./security.nix
-    ./yubikey.nix
-    ../graphical
-  ];
-
   options.cherrykitten.common = {
     test = lib.mkOption {
       type = lib.types.str;

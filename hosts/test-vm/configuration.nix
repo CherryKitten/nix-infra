@@ -4,13 +4,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ../../modules/common
-    ../../modules/graphical
-  ];
-
-  cherrykitten.graphical.enable = false;
-
   users.users.admin = {
     isNormalUser = true;
     extraGroups = ["wheel"];

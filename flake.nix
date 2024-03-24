@@ -15,53 +15,46 @@
     , home-manager
     , ...
     }:
+    let
+      mkHost = { hostname, user ? "sammy" }: {
+
+        imports = [
+          ./hosts/${hostname}/configuration.nix
+          ./modules
+          (import "${home-manager}/nixos")
+        ];
+
+        deployment = {
+          targetUser = user;
+          allowLocalDeployment = true;
+        };
+      };
+    in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
       colmena = {
         meta = {
+          description = "All my NixoS machines";
+          specialArgs = {
+            flake = self;
+          };
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
             overlays = [ ];
           };
         };
 
-        bengal =
-          { name
-          , nodes
-          , pkgs
-          , ...
-          }: {
-            imports = [
-              ./hosts/${name}/configuration.nix
-              ./modules/common
-              (import "${home-manager}/nixos")
-            ];
+        bengal = mkHost { hostname = "bengal"; };
 
-            deployment = {
-              targetUser = "sammy";
-              allowLocalDeployment = true;
-            };
-          };
-
-        maine-coon =
-          { name
-          , nodes
-          , pkgs
-          , ...
-          }: {
-            imports = [
-              ./hosts/${name}/configuration.nix
-              ./modules/common
-              (import "${home-manager}/nixos")
-            ];
-            deployment = {
-              targetHost = "maine-coon";
-              allowLocalDeployment = true;
-            };
-          };
+        maine-coon = mkHost { hostname = "maine-coon"; };
       };
       nixosConfigurations.test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          flake = self;
+        };
         modules = [
+          ./modules
           ./hosts/test-vm/configuration.nix
           (import "${home-manager}/nixos")
         ];
