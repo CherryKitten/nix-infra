@@ -12,6 +12,30 @@ return {
 						},
 					},
 				},
+				rust_analyzer = {
+					settings = {
+						["rust_analyzer"] = {
+							check = {
+								command = "clippy",
+							},
+							completion = {
+								fullFunctionSignatures = {
+									enable = true,
+								},
+							},
+							diagnostics = {
+								styleLints = {
+									enable = true,
+								},
+							},
+							imports = {
+								granularity = {
+									enforce = true,
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 	},

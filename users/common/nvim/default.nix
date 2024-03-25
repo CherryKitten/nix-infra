@@ -11,6 +11,11 @@
       ansible-language-server
       nil
       nixpkgs-fmt
+      # rust
+      rustc
+      cargo
+      rust-analyzer
+      rustfmt
     ];
 
     plugins = with pkgs.vimPlugins; [
