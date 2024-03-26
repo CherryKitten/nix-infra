@@ -16,6 +16,9 @@
       cargo
       rust-analyzer
       rustfmt
+      # misc
+      nodePackages.prettier
+      marksman
     ];
 
     plugins = with pkgs.vimPlugins; [
