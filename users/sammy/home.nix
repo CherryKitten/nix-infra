@@ -1,5 +1,5 @@
 { ... }: {
-  imports = [ ./common ];
+  imports = [ ../../modules/home ];
 
   programs.git = {
     userName = "CherryKitten";
@@ -19,7 +19,7 @@
     enable = true;
     publicKeys = [
       {
-        source = ../cherrykitten.pgp;
+        source = ../../files/cherrykitten.pgp;
         trust = "ultimate";
       }
 

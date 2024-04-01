@@ -42,19 +42,12 @@
         };
 
         defaults = { lib, config, name, ... }: {
-          imports = [ ./hosts/${name} ./hosts/common (import "${home-manager}/nixos") ];
-
-          deployment = {
-            targetUser = "sammy";
-            allowLocalDeployment = true;
-          };
+          imports = [ ./hosts/${name} ./profiles/base ];
 
           home-manager.extraSpecialArgs = {
             inherit inputs outputs;
             pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
           };
-
-          cherrykitten.hostname = name;
         };
 
         bengal = { };
@@ -75,7 +68,7 @@
           mkHome = { user ? "sammy", hostname ? null }:
             lib.homeManagerConfiguration {
               inherit pkgs;
-              modules = [ ./users/${user}.nix ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}.nix");
+              modules = [ ./users/${user} ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}");
               extraSpecialArgs = {
                 inherit inputs outputs;
                 pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };

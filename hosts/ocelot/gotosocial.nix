@@ -1,12 +1,14 @@
-{ ... }:
+{ pkgs-unstable, ... }:
 let
   bind-address = "127.0.0.1";
-  host = "test-gts.cherrykitten.xyz";
+  host = "gts-test.cherrykitten.xyz";
   port = 8553;
 in
 {
   services.gotosocial = {
     enable = true;
+    setupPostgresqlDB = true;
+    package = pkgs-unstable.gotosocial;
     settings = {
       inherit bind-address host port;
       application-name = "CherryKitten";

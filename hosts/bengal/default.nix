@@ -1,9 +1,8 @@
 { ... }: {
   imports = [
     ./hardware-configuration.nix
+    ../../profiles/desktop
   ];
-
-  cherrykitten.graphical = true;
 
   boot.loader.systemd-boot.enable = true;
 

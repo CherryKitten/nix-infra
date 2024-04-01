@@ -1,12 +1,6 @@
-{ config, lib, ... }:
-let
-  graphical =
-    if builtins.hasAttr "cherrykitten" config
-    then config.cherrykitten.graphical
-    else true;
-in
+{ ... }:
 {
-  programs.foot = lib.mkIf graphical {
+  programs.foot = {
     enable = true;
     settings = {
       main = {

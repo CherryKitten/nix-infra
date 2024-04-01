@@ -1,9 +1,8 @@
 { ... }: {
   imports = [
     ./hardware-configuration.nix
+    ./gotosocial.nix
   ];
-
-  cherrykitten.graphical = false;
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
