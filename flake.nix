@@ -26,7 +26,7 @@
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { system = system; }; in {
           default = pkgs.mkShell {
-            nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.git pkgs.home-manager pkgs.nixos-rebuild ];
+            nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.nixos-rebuild ];
             shellHook = "exec $SHELL";
           };
         });

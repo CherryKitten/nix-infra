@@ -44,7 +44,7 @@
         vimcmd_symbol = "[N](bold green)";
         vimcmd_replace_one_symbol = "[R](bold purple)";
         vimcmd_replace_symbol = "[R](bold purple)";
-        vimcmd_visual_symbol	= "[V](bold yellow)";
+        vimcmd_visual_symbol = "[V](bold yellow)";
       };
 
       right_format = lib.concatStrings [
