@@ -42,7 +42,7 @@
       StreamLocalBindUnlink yes
     '';
     settings = {
-      PermitRootLogin = "no";
+      PermitRootLogin = lib.mkOverride 999 "no";
       PasswordAuthentication = false;
       Macs = [
         "hmac-sha2-512"

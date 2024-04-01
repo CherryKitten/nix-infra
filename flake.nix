@@ -52,15 +52,12 @@
 
         bengal = { };
         ocelot = { };
+        iso = { };
       };
 
-      nixosConfigurations = {
-        test = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/test-vm ./hosts/common (import "${home-manager}/nixos") ];
-        };
-      } // colmenaHive.nodes;
+      nixosConfigurations = { } // colmenaHive.nodes;
+
+      packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
 
       homeConfigurations =
         let
