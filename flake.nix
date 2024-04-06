@@ -65,7 +65,7 @@
           mkHome = { user ? "sammy", hostname ? null }:
             lib.homeManagerConfiguration {
               inherit pkgs;
-              modules = [ ./users/${user} ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}");
+              modules = [ ./users/${user}/home.nix ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}/home.nix");
               extraSpecialArgs = {
                 inherit inputs outputs;
                 pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };

@@ -5,6 +5,7 @@
       init = { defaultBranch = "main"; };
       core = { editor = "nvim"; };
       pull.rebase = true;
+      push.autoSetupRemote = true;
     };
     aliases = {
       a = "add";
