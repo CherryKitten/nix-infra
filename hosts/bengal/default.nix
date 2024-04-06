@@ -6,7 +6,6 @@
 
   boot.loader.systemd-boot.enable = true;
 
-  networking.hostName = "bengal";
   networking.networkmanager.enable = true;
 
   services.printing.enable = true;

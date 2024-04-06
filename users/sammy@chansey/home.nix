@@ -1,4 +1,7 @@
 { ... }: {
+  imports = [
+    ../sammy/home.nix
+  ];
   programs.ssh.includes = [
     "./famedly-config"
   ];

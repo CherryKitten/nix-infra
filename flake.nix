@@ -2,9 +2,11 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    colmena.url = "github:zhaofengli/colmena";
-    colmena.inputs.nixpkgs.follows = "nixpkgs";
+
+    colmena = {
+      url = "github:zhaofengli/colmena";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -31,29 +33,33 @@
           };
         });
 
-      colmenaHive = colmena.lib.makeHive {
-        meta = {
-          description = "All my NixoS machines";
-          specialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+      colmena =
+        let
+          hosts = lib.genAttrs (builtins.attrNames (builtins.readDir ./hosts)) (name: { });
+        in
+        {
+          meta = {
+            description = "All my NixoS machines";
+            specialArgs = {
+              inherit inputs outputs;
+              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+            };
+            nixpkgs = import nixpkgs { system = "x86_64-linux"; };
           };
-          nixpkgs = import nixpkgs { system = "x86_64-linux"; };
-        };
 
-        defaults = { lib, config, name, ... }: {
-          imports = [ ./hosts/${name} ./profiles/base ];
+          defaults = { lib, config, name, ... }: {
+            imports = [ ./hosts/${name} ./profiles/base ];
 
-          home-manager.extraSpecialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+            networking.hostName = name;
+
+            home-manager.extraSpecialArgs = {
+              inherit inputs outputs;
+              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+            };
           };
-        };
+        } // hosts;
 
-        bengal = { };
-        ocelot = { };
-        iso = { };
-      };
+      colmenaHive = inputs.colmena.lib.makeHive colmena;
 
       nixosConfigurations = { } // colmenaHive.nodes;
 
@@ -62,19 +68,14 @@
       homeConfigurations =
         let
           pkgs = import nixpkgs { system = "x86_64-linux"; };
-          mkHome = { user ? "sammy", hostname ? null }:
-            lib.homeManagerConfiguration {
-              inherit pkgs;
-              modules = [ ./users/${user}/home.nix ] ++ lib.optional (!isNull hostname) (./. + "/users/${user}@${hostname}/home.nix");
-              extraSpecialArgs = {
-                inherit inputs outputs;
-                pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
-              };
-            };
         in
-        {
-          sammy = mkHome { };
-          "sammy@chansey" = mkHome { hostname = "chansey"; };
-        };
+        lib.genAttrs (builtins.attrNames (builtins.readDir ./users)) (name: lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./users/${name}/home.nix ];
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+          };
+        });
     };
 }

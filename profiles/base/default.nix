@@ -1,6 +1,7 @@
 { lib, config, pkgs, inputs, ... }: {
   imports = [
-    ../../users
+    ../../users/root
+    ../../users/sammy
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -123,6 +124,4 @@
     whois
     wireguard-tools
   ];
-
-
 }
