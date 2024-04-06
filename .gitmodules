@@ -1,0 +1,4 @@
+[submodule "nixos-infect"]
+	path = misc/nixos-infect
+	url = ../nixos-infect
+	branch = sammy

@@ -26,10 +26,21 @@
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
       devShells = forAllSystems (system:
-        let pkgs = import nixpkgs { system = system; }; in {
+        let
+          pkgs = import nixpkgs { system = system; };
+          packages = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
+        in
+        {
           default = pkgs.mkShell {
-            nativeBuildInputs = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.nixos-rebuild ];
+            nativeBuildInputs = packages;
             shellHook = "exec $SHELL";
+          };
+          hcloud = pkgs.mkShell {
+            nativeBuildInputs = packages ++ [ pkgs.hcloud ];
+            shellHook = ''
+              export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
+              exec $SHELL
+            '';
           };
         });
 
