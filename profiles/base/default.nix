@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }: {
+{ lib, pkgs, inputs, ... }: {
   imports = [
     ../../users/root
     ../../users/sammy
@@ -7,7 +7,6 @@
 
   deployment.tags = [ pkgs.stdenv.hostPlatform.system ];
   deployment.targetUser = lib.mkDefault "sammy";
-  deployment.targetHost = lib.mkDefault config.networking.fqdnOrHostName;
 
   nix = {
     settings = {

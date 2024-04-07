@@ -62,6 +62,7 @@
             imports = [ ./hosts/${name} ./profiles/base ];
 
             networking.hostName = name;
+            networking.domain = "cherrykitten.xyz";
 
             home-manager.extraSpecialArgs = {
               inherit inputs outputs;
