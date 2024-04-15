@@ -53,20 +53,40 @@
             description = "All my NixoS machines";
             specialArgs = {
               inherit inputs outputs;
+              nodes = colmenaHive.nodes;
               pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
             };
             nixpkgs = import nixpkgs { system = "x86_64-linux"; };
           };
 
-          defaults = { lib, config, name, ... }: {
+          defaults = { lib, config, name, nodes, ... }: {
             imports = [ ./hosts/${name} ./profiles/base ];
 
-            networking.hostName = name;
-            networking.domain = "cherrykitten.xyz";
+            options.cherrykitten = {
+              primaryIPv4 = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default =
+                  if (config.networking.interfaces ? eth0) then
+                    (builtins.elemAt config.networking.interfaces.eth0.ipv4.addresses 0).address
+                  else null;
+              };
+              primaryIPv6 = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default =
+                  if (config.networking.interfaces ? eth0) then
+                    (builtins.elemAt config.networking.interfaces.eth0.ipv6.addresses 0).address
+                  else null;
+              };
+            };
 
-            home-manager.extraSpecialArgs = {
-              inherit inputs outputs;
-              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+            config = {
+              networking.hostName = name;
+              networking.domain = "cherrykitten.xyz";
+
+              home-manager.extraSpecialArgs = {
+                inherit inputs outputs;
+                pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+              };
             };
           };
         } // hosts;
