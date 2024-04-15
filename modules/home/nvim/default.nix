@@ -19,6 +19,7 @@
       # misc
       nodePackages.prettier
       marksman
+      haskell-language-server
     ];
 
     plugins = with pkgs.vimPlugins; [
