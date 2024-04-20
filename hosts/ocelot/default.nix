@@ -4,6 +4,7 @@
     ../../profiles/hcloud
   ];
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+  cherrykitten.backups.enable = true;
 
   networking = {
     nameservers = [

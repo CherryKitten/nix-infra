@@ -2,6 +2,7 @@
   imports = [
     ../../users/root
     ../../users/sammy
+    ../../modules/nixos
     inputs.home-manager.nixosModules.home-manager
   ];
 
