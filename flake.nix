@@ -60,7 +60,7 @@
           };
 
           defaults = { lib, config, name, nodes, ... }: {
-            imports = [ ./hosts/${name} ./profiles/base ];
+            imports = [ ./hosts/${name} ./profiles/base (import ./overlays) ];
 
             options.cherrykitten = {
               primaryIPv4 = lib.mkOption {

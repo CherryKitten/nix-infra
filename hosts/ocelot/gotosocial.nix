@@ -1,18 +1,22 @@
-{ pkgs-unstable, ... }:
+{ ... }:
 let
   bind-address = "127.0.0.1";
-  host = "gts-test.cherrykitten.xyz";
+  host = "cherrykitten.gay";
   port = 8553;
 in
 {
+  deployment.keys."gts_env" = {
+    destDir = "/root/keys/";
+    keyCommand = [ "pass" "hosts/ocelot/gts/env" ];
+    user = "gotosocial";
+  };
   services.gotosocial = {
     enable = true;
     setupPostgresqlDB = true;
-    package = pkgs-unstable.gotosocial;
+    environmentFile = "/root/keys/gts_env";
     settings = {
       inherit bind-address host port;
       application-name = "CherryKitten";
-      setupPostgresqlDB = true;
       landing-page-user = "sammy";
 
       instance-expose-suspended = true;
@@ -31,16 +35,19 @@ in
       statuses-poll-max-options = 10;
       statuses-poll-option-max-chars = 150;
       statuses-media-max-files = 16;
+
+      storage-backend = "s3";
     };
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   services.nginx = {
     enable = true;
-    clientMaxBodySize = "40M";
+    clientMaxBodySize = "80M";
     virtualHosts = {
       "${host}" = {
-        forceSSL = false;
+        forceSSL = true;
+        enableACME = true;
         locations = {
           "/" = {
             recommendedProxySettings = true;

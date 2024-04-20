@@ -12,14 +12,11 @@
       nil
       nixpkgs-fmt
       # rust
-      rustc
-      cargo
       rust-analyzer
       rustfmt
       # misc
       nodePackages.prettier
       marksman
-      haskell-language-server
     ];
 
     plugins = with pkgs.vimPlugins; [
