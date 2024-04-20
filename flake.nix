@@ -93,7 +93,12 @@
 
       colmenaHive = inputs.colmena.lib.makeHive colmena;
 
-      nixosConfigurations = { } // colmenaHive.nodes;
+      nixosConfigurations = {
+        iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ home-manager.nixosModules.home-manager ./profiles/iso ];
+        };
+      } // colmenaHive.nodes;
 
       packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
 
