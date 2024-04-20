@@ -12,6 +12,11 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    cherrykitten-website = {
+        url = "git+https://git.cherrykitten.dev/sammy/cherrykitten.dev?ref=nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
   };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, colmena, ... }:
