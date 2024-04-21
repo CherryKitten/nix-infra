@@ -14,110 +14,62 @@
     };
 
     cherrykitten-website = {
-        url = "git+https://git.cherrykitten.dev/sammy/cherrykitten.dev?ref=nix";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      url = "git+https://git.cherrykitten.dev/sammy/cherrykitten.dev?ref=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, colmena, ... }:
-    let
-      inherit (self) outputs;
-      systems = [ "aarch64-linux" "i686-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      forAllSystems = lib.genAttrs systems;
-      lib = nixpkgs.lib // home-manager.lib;
-    in
-    rec {
-      inherit lib;
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+  outputs = inputs @ { self, flake-parts, nixpkgs, nixpkgs-unstable, home-manager, colmena, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./hive.nix
+      ];
 
-      devShells = forAllSystems (system:
-        let
-          pkgs = import nixpkgs { system = system; };
-          packages = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
-        in
-        {
-          default = pkgs.mkShell {
-            nativeBuildInputs = packages;
-            shellHook = "exec $SHELL";
-          };
-          hcloud = pkgs.mkShell {
-            nativeBuildInputs = packages ++ [ pkgs.hcloud ];
-            shellHook = ''
-              export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
-              exec $SHELL
-            '';
-          };
-        });
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
 
-      colmena =
-        let
-          hosts = lib.genAttrs (builtins.attrNames (builtins.readDir ./hosts)) (name: { });
-        in
-        {
-          meta = {
-            description = "All my NixoS machines";
-            specialArgs = {
-              inherit inputs outputs;
-              nodes = colmenaHive.nodes;
-              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+      perSystem = { config, pkgs, ... }: {
+
+        formatter = pkgs.nixpkgs-fmt;
+        devShells =
+          let
+            packages = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
+          in
+          {
+            default = pkgs.mkShell {
+              nativeBuildInputs = packages;
+              shellHook = "exec $SHELL";
             };
-            nixpkgs = import nixpkgs { system = "x86_64-linux"; };
-          };
-
-          defaults = { lib, config, name, nodes, ... }: {
-            imports = [ ./hosts/${name} ./profiles/base (import ./overlays) ];
-
-            options.cherrykitten = {
-              primaryIPv4 = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default =
-                  if (config.networking.interfaces ? eth0) then
-                    (builtins.elemAt config.networking.interfaces.eth0.ipv4.addresses 0).address
-                  else null;
-              };
-              primaryIPv6 = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default =
-                  if (config.networking.interfaces ? eth0) then
-                    (builtins.elemAt config.networking.interfaces.eth0.ipv6.addresses 0).address
-                  else null;
-              };
+            hcloud = pkgs.mkShell {
+              nativeBuildInputs = packages ++ [ pkgs.hcloud ];
+              shellHook = ''
+                export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
+                exec $SHELL
+              '';
             };
+          };
+      };
 
-            config = {
-              networking.hostName = name;
-              networking.domain = "cherrykitten.xyz";
+      flake =
+        {
+          packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
 
-              home-manager.extraSpecialArgs = {
-                inherit inputs outputs;
+          homeConfigurations =
+            let
+              pkgs = import nixpkgs { system = "x86_64-linux"; };
+            in
+            nixpkgs.lib.genAttrs (builtins.attrNames (builtins.readDir ./users)) (name: home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [ ./users/${name}/home.nix ];
+              extraSpecialArgs = {
+                inherit inputs;
                 pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
               };
-            };
-          };
-        } // hosts;
-
-      colmenaHive = inputs.colmena.lib.makeHive colmena;
-
-      nixosConfigurations = {
-        iso = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ home-manager.nixosModules.home-manager ./profiles/iso ];
+            });
         };
-      } // colmenaHive.nodes;
-
-      packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
-
-      homeConfigurations =
-        let
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-        in
-        lib.genAttrs (builtins.attrNames (builtins.readDir ./users)) (name: lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./users/${name}/home.nix ];
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
-          };
-        });
     };
 }

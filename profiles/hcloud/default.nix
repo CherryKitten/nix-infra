@@ -8,5 +8,5 @@
   boot.initrd.kernelModules = [ "nvme" ];
 
   deployment.targetHost = (builtins.elemAt config.networking.interfaces.eth0.ipv4.addresses 0).address;
-  deployment.tags = [ "hcloud" "hetzner" "cloud"];
+  deployment.tags = [ "hcloud" "hetzner" "cloud" ];
 }
