@@ -1,5 +1,5 @@
-{ ... }: {
-  imports = [ ../../modules/home ];
+{ flake, ... }: {
+  imports = (builtins.attrValues flake.homeManagerModules);
 
   programs.git = {
     userName = "CherryKitten";

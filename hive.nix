@@ -16,13 +16,19 @@ in
           description = "All my NixoS machines";
           specialArgs = {
             inherit inputs outputs pkgs-unstable;
+            flake = self;
             nodes = colmenaHive.nodes;
           };
           nixpkgs = pkgs;
         };
 
         defaults = { lib, config, name, nodes, ... }: {
-          imports = [ ./hosts/${name} ./profiles/base (import ./overlays) ];
+          imports = [
+            ./hosts/${name}
+            ./profiles/base
+            (import ./overlays)
+            inputs.home-manager.nixosModules.home-manager
+          ] ++ builtins.attrValues self.nixosModules;
 
           options.cherrykitten = {
             primaryIPv4 = lib.mkOption {
@@ -45,8 +51,13 @@ in
             networking.hostName = name;
             networking.domain = "cherrykitten.xyz";
 
+            deployment = {
+              targetUser = lib.mkDefault "sammy";
+              tags = [ pkgs.stdenv.hostPlatform.system ];
+            };
             home-manager.extraSpecialArgs = {
               inherit inputs outputs pkgs-unstable;
+              flake = self;
             };
           };
         };

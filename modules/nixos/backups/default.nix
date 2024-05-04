@@ -42,9 +42,9 @@ in
           ".cache"
           ".git"
         ];
-        environmentFile = "/root/keys/restic_env";
-        repositoryFile = "/root/keys/restic_repository_file";
-        passwordFile = "/root/keys/restic_password_file";
+        environmentFile = config.deployment.keys."restic_env".path;
+        repositoryFile = config.deployment.keys."restic_repository_file".path;
+        passwordFile = config.deployment.keys."restic_password_file".path;
       };
     };
   };

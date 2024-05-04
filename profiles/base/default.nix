@@ -2,12 +2,8 @@
   imports = [
     ../../users/root
     ../../users/sammy
-    ../../modules/nixos
-    inputs.home-manager.nixosModules.home-manager
   ];
 
-  deployment.tags = [ pkgs.stdenv.hostPlatform.system ];
-  deployment.targetUser = lib.mkDefault "sammy";
 
   nix = {
     settings = {
@@ -82,6 +78,7 @@
     enable = lib.mkDefault true;
     maxretry = 5;
   };
+
   services.udev.packages = with pkgs; [ libu2f-host yubikey-personalization ];
 
   programs.gnupg.agent = {

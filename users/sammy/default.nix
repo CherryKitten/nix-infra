@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
   deployment.keys."sammy_password_hash" = {
     destDir = "/home/sammy/.keys";
@@ -10,7 +10,7 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZyQSZw+pExsx2RXB+yxbaJGB9mtvudbQ/BP7E1yKvr openpgp:0x6068FEBB" ];
-    hashedPasswordFile = lib.mkDefault "/home/sammy/.keys/sammy_password_hash";
+    hashedPasswordFile = lib.mkDefault config.deployment.keys."sammy_password_hash".path;
   };
 
   home-manager.users.sammy = import ./home.nix;

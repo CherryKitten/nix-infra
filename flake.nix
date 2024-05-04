@@ -56,6 +56,25 @@
 
       flake =
         {
+
+          nixosModules = builtins.listToAttrs (
+            map
+              (x: {
+                name = x;
+                value = import (./modules/nixos + "/${x}");
+              })
+              (builtins.attrNames (builtins.readDir ./modules/nixos))
+          );
+
+          homeManagerModules = builtins.listToAttrs (
+            map
+              (name: {
+                inherit name;
+                value = import (./modules/home + "/${name}");
+              })
+              (builtins.attrNames (builtins.readDir ./modules/home))
+          );
+
           packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
 
           homeConfigurations =
@@ -67,6 +86,7 @@
               modules = [ ./users/${name}/home.nix ];
               extraSpecialArgs = {
                 inherit inputs;
+                flake = self;
                 pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
               };
             });

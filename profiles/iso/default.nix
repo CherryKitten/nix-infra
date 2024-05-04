@@ -44,7 +44,7 @@
 
   home-manager.users.nixos = {
     imports = [
-      ../../modules/home/foot.nix
+      ../../modules/home/foot
     ];
     home.stateVersion = "23.11";
 
