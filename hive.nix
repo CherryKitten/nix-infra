@@ -52,6 +52,7 @@ in
             networking.domain = "cherrykitten.xyz";
 
             deployment = {
+	      allowLocalDeployment = true;
               targetUser = lib.mkDefault "sammy";
               tags = [ pkgs.stdenv.hostPlatform.system ];
             };
