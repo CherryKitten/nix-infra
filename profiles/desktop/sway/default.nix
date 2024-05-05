@@ -1,4 +1,10 @@
 { config, pkgs, ... }: {
+
+  imports = [
+    ./mako.nix
+    ./wofi.nix
+  ];
+
   hardware.opengl.enable = true;
 
   programs.sway.enable = true;
@@ -28,9 +34,7 @@
     services.swayidle =
       let
         lockCommand = "${pkgs.writeShellScript "swaylock-command" ''
-        ${pkgs.grim}/bin/grim -t png -l 1 /tmp/lock-screenshot.png
-        ${pkgs.imagemagick}/bin/magick /tmp/lock-screenshot.png -blur 80x40 /tmp/lock-screenshot.png
-        ${pkgs.swaylock}/bin/swaylock -i /tmp/lock-screenshot.png
+        ${pkgs.swaylock}/bin/swaylock
       ''}";
       in
       {
@@ -60,8 +64,6 @@
           terminal = "foot";
           menu = "wofi --show drun";
 
-          bars = [ ];
-
           window = {
             border = 0;
             hideEdgeBorders = "both";
@@ -81,6 +83,50 @@
               tap = "enabled";
             };
           };
+
+          bars = [{
+            mode = "dock";
+            hiddenState = "hide";
+            position = "bottom";
+            workspaceButtons = true;
+            workspaceNumbers = true;
+            statusCommand = "${pkgs.i3status}/bin/i3status";
+            fonts = {
+              names = [ "JetBrains Mono" ];
+              size = 10.0;
+            };
+            trayOutput = "primary";
+            colors = {
+              background = "#000000";
+              statusline = "#ffffff";
+              separator = "#666666";
+              focusedWorkspace = {
+                border = "#4c7899";
+                background = "#285577";
+                text = "#ffffff";
+              };
+              activeWorkspace = {
+                border = "#333333";
+                background = "#5f676a";
+                text = "#ffffff";
+              };
+              inactiveWorkspace = {
+                border = "#333333";
+                background = "#222222";
+                text = "#888888";
+              };
+              urgentWorkspace = {
+                border = "#2f343a";
+                background = "#900000";
+                text = "#ffffff";
+              };
+              bindingMode = {
+                border = "#2f343a";
+                background = "#900000";
+                text = "#ffffff";
+              };
+            };
+          }];
 
           keybindings = {
             "${modifier}+Return" = "exec ${cfg.config.terminal}";

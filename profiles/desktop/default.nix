@@ -1,16 +1,14 @@
 { pkgs, ... }: {
 
   imports = [
-    ./sway.nix
-    ./mako.nix
-    ./wofi.nix
-    ./waybar.nix
+    ./sway
     ./foot.nix
     ./firefox.nix
   ];
 
   users.users.sammy.packages = with pkgs; [
     telegram-desktop
+    mpv
   ];
 
   services.logind.lidSwitch = "suspend-then-hibernate";
@@ -19,7 +17,12 @@
 
   services.xserver = {
     enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+      autoNumlock = true;
+    };
+
     libinput.enable = true;
 
     xkb.layout = "de";
