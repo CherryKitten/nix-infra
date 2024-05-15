@@ -3,7 +3,7 @@ let
   inherit (inputs) nixpkgs nixpkgs-unstable;
   inherit (self) outputs;
   pkgs = import nixpkgs { system = "x86_64-linux"; };
-  pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
+  pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
 in
 {
   flake = rec {

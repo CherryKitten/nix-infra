@@ -47,6 +47,7 @@
         ];
         timeouts = [
           { timeout = 300; command = lockCommand; }
+          { timeout = 1800; command = "systemctl hybrid-sleep"; }
         ];
       };
     wayland.windowManager.sway =
@@ -70,9 +71,15 @@
             hideEdgeBorders = "both";
           };
           gaps.inner = 10;
+          gaps.smartGaps = true;
 
           output = {
-            "*" = { };
+            "eDP-1" = {
+              position = "0 1080";
+            };
+            "DP-6" = {
+              position = "0 0";
+            };
           };
 
           input = {
@@ -176,6 +183,11 @@
             "${cfg.config.modifier}+9" = "workspace 9";
             "${cfg.config.modifier}+0" = "workspace 10";
 
+            "${cfg.config.modifier}+Alt+Right" = "workspace next";
+            "${cfg.config.modifier}+Alt+Left" = "workspace prev";
+            "${cfg.config.modifier}+Alt+Up" = "move workspace to output up";
+            "${cfg.config.modifier}+Alt+Down" = "move workspace to output down";
+
             "${cfg.config.modifier}+Shift+1" = "move container to workspace 1";
             "${cfg.config.modifier}+Shift+2" = "move container to workspace 2";
             "${cfg.config.modifier}+Shift+3" = "move container to workspace 3";
@@ -187,6 +199,9 @@
             "${cfg.config.modifier}+Shift+9" = "move container to workspace 9";
             "${cfg.config.modifier}+Shift+0" = "move container to workspace 10";
 
+            "${cfg.config.modifier}+Alt+N" = "move container to workspace next";
+            "${cfg.config.modifier}+Alt+P" = "move container to workspace prev";
+
             "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -i 5";
             "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -d 5";
             "XF86AudioMute" = "exec --no-startup-id ${pkgs.pamixer}/bin/pamixer -t";
@@ -196,6 +211,12 @@
 
             "${cfg.config.modifier}+r" = "mode resize";
           };
+
+          startup = [{
+            command = "systemctl --user restart nextcloud-client";
+            always = true;
+          }];
+
         };
 
         extraConfig = ''

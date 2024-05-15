@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, pkgs-unstable, ... }: {
 
   imports = [
     ./sway
@@ -9,8 +9,23 @@
   users.users.sammy.packages = with pkgs; [
     telegram-desktop
     mpv
+    thunderbird
+    pkgs-unstable.obsidian
+    bluez-tools
+    blueman
+    pavucontrol
   ];
 
+  home-manager.users.sammy.services.nextcloud-client.enable = true;
+
+  services.rpcbind.enable = true; # needed for NFS
+
+  # Enable sound.
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+
+  hardware.bluetooth.enable = true;
   services.logind.lidSwitch = "suspend-then-hibernate";
   services.logind.powerKey = "hibernate";
   services.logind.powerKeyLongPress = "poweroff";
