@@ -23,6 +23,12 @@
     }
   ];
 
+  fileSystems."/mnt/Media" = {
+    device = "192.168.0.3:/mnt/user/Media";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" "noatime" ]; # disconnects after 10 minutes (i.e. 600 seconds)
+  };
+
   system.stateVersion = "23.11"; # Did you read the comment?
 
   # Famedly compliance foo - stolen from evelyn :3
