@@ -2,6 +2,7 @@
   imports = [
     ./gotosocial.nix
     ../../profiles/hcloud
+    ./website.nix
   ];
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
   cherrykitten.backups.enable = true;
