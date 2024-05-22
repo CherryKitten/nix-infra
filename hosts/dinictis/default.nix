@@ -12,6 +12,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  users.users.sammy.packages = with pkgs; [
+    picard
+  ];
 
   home-manager.users.sammy.programs.ssh.includes = [
     "./famedly-config"

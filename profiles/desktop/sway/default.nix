@@ -15,6 +15,7 @@
     wdisplays
     waypipe
     wl-clipboard
+    xfce.thunar
   ];
 
   environment.variables.SDL_VIDEODRIVER = "wayland";
