@@ -30,29 +30,12 @@ in
             inputs.home-manager.nixosModules.home-manager
           ] ++ builtins.attrValues self.nixosModules;
 
-          options.cherrykitten = {
-            primaryIPv4 = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default =
-                if (config.networking.interfaces ? eth0) then
-                  (builtins.elemAt config.networking.interfaces.eth0.ipv4.addresses 0).address
-                else null;
-            };
-            primaryIPv6 = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default =
-                if (config.networking.interfaces ? eth0) then
-                  (builtins.elemAt config.networking.interfaces.eth0.ipv6.addresses 0).address
-                else null;
-            };
-          };
-
           config = {
             networking.hostName = name;
             networking.domain = "cherrykitten.xyz";
 
             deployment = {
-	      allowLocalDeployment = true;
+              allowLocalDeployment = true;
               targetUser = lib.mkDefault "sammy";
               tags = [ pkgs.stdenv.hostPlatform.system ];
             };
