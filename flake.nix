@@ -77,20 +77,6 @@
           );
 
           packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
-
-          homeConfigurations =
-            let
-              pkgs = import nixpkgs { system = "x86_64-linux"; };
-            in
-            nixpkgs.lib.genAttrs (builtins.attrNames (builtins.readDir ./users)) (name: home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              modules = [ ./users/${name}/home.nix ];
-              extraSpecialArgs = {
-                inherit inputs;
-                flake = self;
-                pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; };
-              };
-            });
         };
     };
 }
