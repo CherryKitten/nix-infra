@@ -2,6 +2,6 @@
 
 {
   nixpkgs.overlays = [
-   (import ./gotosocial.nix)
+    (import ./gotosocial.nix)
   ];
 }
