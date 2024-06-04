@@ -39,6 +39,19 @@
         ];
       };
 
+      "serval" = {
+        host = "serval";
+        hostname = "2a01:4f8:1c1b:5db9::1";
+        identityFile = "~/.ssh/yubikey.pub";
+        identitiesOnly = true;
+        remoteForwards = [
+          {
+            bind.address = "/run/user/1000/gnupg/S.gpg-agent";
+            host.address = "/run/user/1000/gnupg/S.gpg-agent.extra";
+          }
+        ];
+      };
+
       "chat.cherrykitten.dev" = {
         host = "chat.cherrykitten.dev chat";
         hostname = "chat.cherrykitten.dev";
