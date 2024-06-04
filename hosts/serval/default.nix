@@ -41,6 +41,10 @@
         ipv6.addresses = [
           { address = config.cherrykitten.network.internal_IPv6; prefixLength = 64; }
         ];
+        ipv4.routes = [
+          { address = "10.69.0.1"; prefixLength = 32; }
+          { address = "10.69.0.0"; prefixLength = 24; via = "10.69.0.1"; }
+        ];
       };
     };
   };
