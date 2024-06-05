@@ -28,6 +28,7 @@ in
             ./profiles/base
             (import ./overlays)
             inputs.home-manager.nixosModules.home-manager
+            inputs.impermanence.nixosModules.impermanence
           ] ++ builtins.attrValues self.nixosModules;
 
           config = {
