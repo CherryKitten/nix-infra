@@ -3,6 +3,14 @@
 
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
   cherrykitten.backups.enable = true;
+  cherrykitten.prometheus = {
+    server.enable = true;
+    client.enable = true;
+  };
+  cherrykitten.grafana = {
+    enable = true;
+    hostname = "graph.cherrykitten.dev";
+  };
   cherrykitten.network = {
     public_IPv4 = "116.203.116.228";
     public_IPv6 = "2a01:4f8:1c1b:5db9::1";

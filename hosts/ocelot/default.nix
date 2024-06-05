@@ -12,6 +12,7 @@
     internal_IPv4 = "10.69.0.5";
     internal_IPv6 = "fe80::8400:ff:fe8e:470d";
   };
+  cherrykitten.prometheus.client.enable = true;
 
   networking = {
     nameservers = [
