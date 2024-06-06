@@ -21,6 +21,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
