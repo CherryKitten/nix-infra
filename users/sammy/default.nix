@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 {
   deployment.keys."sammy_password_hash" = {
-    destDir = "/home/sammy/.keys";
+    destDir = "/nix/keys/";
     keyCommand = [ "pass" "users/sammy/hashedPassword" ];
   };
 
