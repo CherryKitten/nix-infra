@@ -12,7 +12,7 @@ in {
       node = {
         enable = true;
         port = 9100;
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = [ "systemd" "processes" "cpu_vulnerabilities" "mountstats" "network_route" ];
         openFirewall = true;
         listenAddress = config.cherrykitten.network.internal_IPv4;
       };
