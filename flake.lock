@@ -10,14 +10,13 @@
       "locked": {
         "lastModified": 1716797840,
         "narHash": "sha256-Xhc61kTl/hJ/UmLzkmZjGp1qkv7G0JqmqpIhpbLWQPg=",
-        "ref": "nix",
+        "ref": "refs/heads/main",
         "rev": "e89223d5af321e4298daf4f756d84231412f6f5f",
         "revCount": 38,
         "type": "git",
         "url": "https://git.cherrykitten.dev/sammy/cherrykitten.dev"
       },
       "original": {
-        "ref": "nix",
         "type": "git",
         "url": "https://git.cherrykitten.dev/sammy/cherrykitten.dev"
       }

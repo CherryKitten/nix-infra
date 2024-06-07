@@ -15,7 +15,7 @@
 
 
     cherrykitten-website = {
-      url = "git+https://git.cherrykitten.dev/sammy/cherrykitten.dev?ref=nix";
+      url = "git+https://git.cherrykitten.dev/sammy/cherrykitten.dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
