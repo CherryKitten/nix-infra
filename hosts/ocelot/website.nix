@@ -3,6 +3,7 @@
     enable = true;
     virtualHosts = {
       "cherrykitten.dev" = {
+        extraConfig = "error_page 404 /404.html;";
         forceSSL = true;
         enableACME = true;
         locations = {
