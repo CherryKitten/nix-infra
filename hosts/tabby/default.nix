@@ -16,6 +16,12 @@
 
   networking.wireless.iwd.enable = true;
 
+  fileSystems."/mnt/Media" = {
+    device = "192.168.0.3:/mnt/user/Media";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" "noatime" ]; # disconnects after 10 minutes (i.e. 600 seconds)
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
