@@ -9,6 +9,7 @@
     inputs.nixos-hardware.nixosModules.framework-16-7040-amd
   ];
 
+  services.hardware.bolt.enable = true;
   cherrykitten.impermanence.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
