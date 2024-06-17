@@ -47,7 +47,7 @@
           { event = "lock"; command = lockCommand; }
         ];
         timeouts = [
-          { timeout = 300; command = lockCommand; }
+          { timeout = 900; command = lockCommand; }
           { timeout = 1800; command = "systemctl hybrid-sleep"; }
         ];
       };
