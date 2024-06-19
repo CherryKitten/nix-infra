@@ -28,7 +28,6 @@
   services.fwupd.enable = true;
 
   services.xserver.xkb.layout = lib.mkForce "us";
-  home-manager.users.sammy.wayland.windowManager.sway.config.input."*".xkb_layout = lib.mkForce "us";
 
   users.users.sammy.packages = with pkgs; [
     picard

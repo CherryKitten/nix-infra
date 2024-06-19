@@ -85,8 +85,8 @@
 
           input = {
             "*" = {
-              xkb_layout = "de";
-              xkb_options = "caps:escape";
+              xkb_layout = "us,de";
+              xkb_options = "caps:escape,grp:rctrl_toggle";
             };
             "type:touchpad" = {
               tap = "enabled";
