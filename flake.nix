@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-24.05-small";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
 
     colmena = {
