@@ -6,6 +6,7 @@
       # LazyVim
       lua-language-server
       stylua
+      lazygit
       # Telescope
       ripgrep
       ansible-language-server
