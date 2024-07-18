@@ -5,6 +5,8 @@
     ./website.nix
   ];
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+  fileSystems."/mnt/gts" = { device = "/dev/sdb1"; fsType = "ext4"; };
+  services.restic.backups.default.paths = ["/mnt/gts"];
   cherrykitten.backups.enable = true;
   cherrykitten.network = {
     public_IPv4 = "128.140.109.125";

@@ -5,15 +5,9 @@ let
   port = 8553;
 in
 {
-  deployment.keys."gts_env" = {
-    destDir = "/root/keys/";
-    keyCommand = [ "pass" "hosts/ocelot/gts/env" ];
-    user = "gotosocial";
-  };
   services.gotosocial = {
     enable = true;
     setupPostgresqlDB = true;
-    environmentFile = "/root/keys/gts_env";
     settings = {
       inherit bind-address host port;
       application-name = "CherryKitten";
@@ -36,7 +30,8 @@ in
       statuses-poll-option-max-chars = 150;
       statuses-media-max-files = 16;
 
-      storage-backend = "s3";
+      storage-backend = "local";
+      storage-local-base-path = "/mnt/gts";
     };
   };
 
