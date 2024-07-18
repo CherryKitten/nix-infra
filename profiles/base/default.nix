@@ -104,6 +104,7 @@
   environment.systemPackages = with pkgs; [
     bat
     bind.dnsutils
+    comma
     fd
     file
     git

@@ -32,6 +32,8 @@
   users.users.sammy.packages = with pkgs; [
     picard
     discord
+    inkscape
+    osu-lazer-bin
   ];
 
   programs.steam = {
