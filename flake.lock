@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1724141859,
-        "narHash": "sha256-1G4aWLtAl+1LdyGkGhFBRuP6bdYdXChdk86dYOyCQrw=",
+        "lastModified": 1724832240,
+        "narHash": "sha256-9v4ZrxiXzayBk4sYhOL7PNCNFpVqEj0am7/LOM51qgw=",
         "ref": "refs/heads/main",
-        "rev": "381a2b1abecbf085f2c2f13085bcb0335b6fef37",
-        "revCount": 54,
+        "rev": "c473d7d4493f10233c949f3dd46d6ff79869c3a9",
+        "revCount": 55,
         "type": "git",
         "url": "https://git.cherrykitten.dev/sammy/cherrykitten.dev"
       },
