@@ -18,3 +18,6 @@ delete-hcloud-host name="":
 git:
   nix fmt
   git add .
+
+update-secrets:
+  git commit secrets -m "update secrets"
