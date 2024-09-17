@@ -1,4 +1,4 @@
-{ flake, ... }: {
+{ pkgs, flake, ... }: {
   imports = (builtins.attrValues flake.homeManagerModules);
 
   programs.git = {
@@ -14,6 +14,13 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+  };
+
 
   programs.gpg = {
     enable = true;
