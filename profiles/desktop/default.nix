@@ -44,6 +44,9 @@
     xkb.options = "caps:escape";
   };
 
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   fonts = {
     packages = with pkgs; [
       jetbrains-mono

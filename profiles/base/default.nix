@@ -96,6 +96,8 @@
       cores = 6;
       graphics = true;
     };
+    services.qemuGuest.enable = true;
+    services.spice-vdagentd.enable = true;
     users.users.sammy.hashedPassword = "";
   };
 
