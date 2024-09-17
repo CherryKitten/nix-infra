@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, lib, inputs, ... }: {
+{ pkgs, pkgs-unstable, lib, inputs, ... }: {
   imports = [
     ../../profiles/desktop
     ./hardware-configuration.nix
@@ -33,12 +33,20 @@
     picard
     discord
     inkscape
-    osu-lazer-bin
+    pkgs-unstable.osu-lazer-bin
   ];
 
   programs.steam = {
     enable = true;
   };
+
+  hardware.steam-hardware.enable = true;
+  services.usbmuxd.enable = true;
+
+  environment.systemPackages = with pkgs; [
+  libimobiledevice
+  ifuse # optional, to mount using 'ifuse'
+];
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
