@@ -2,3 +2,6 @@
 	path = misc/nixos-infect
 	url = ../nixos-infect
 	branch = sammy
+[submodule "secrets"]
+	path = secrets
+	url = git@git.cherrykitten.dev:sammy/secret-store
