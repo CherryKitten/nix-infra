@@ -1,8 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   imports = [
     ../../profiles/desktop
     ./hardware-configuration.nix
   ];
+
+  services.xserver.xkb.layout = lib.mkForce "de";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

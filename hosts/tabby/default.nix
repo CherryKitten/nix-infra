@@ -9,12 +9,9 @@
     inputs.nixos-hardware.nixosModules.framework-16-7040-amd
   ];
 
-  services.hardware.bolt.enable = true;
   cherrykitten.impermanence.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.wireless.iwd.enable = true;
 
   fileSystems."/mnt/Media" = {
     device = "192.168.0.3:/mnt/user/Media";

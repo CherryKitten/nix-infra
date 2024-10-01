@@ -17,6 +17,7 @@ in
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
         "/var/lib/iwd"
+        "/etc/NetworkManager/system-connections/"
         "/home"
       ];
       files = [

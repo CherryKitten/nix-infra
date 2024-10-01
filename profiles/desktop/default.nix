@@ -1,7 +1,6 @@
-{ pkgs, pkgs-unstable, ... }: {
+{ pkgs, pkgs-unstable, flake, ... }: {
 
   imports = [
-    ./sway
     ./foot.nix
     ./firefox.nix
   ];
@@ -18,6 +17,18 @@
 
   home-manager.users.sammy.services.nextcloud-client.enable = true;
 
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
+  services.xserver = {
+    enable = true;
+
+    libinput.enable = true;
+
+    xkb.layout = "us";
+    xkb.options = "caps:escape";
+  };
+
   services.rpcbind.enable = true; # needed for NFS
 
   # Enable sound.
@@ -30,19 +41,11 @@
   services.logind.powerKey = "hibernate";
   services.logind.powerKeyLongPress = "poweroff";
 
-  services.xserver = {
-    enable = true;
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
-      autoNumlock = true;
-    };
+  services.hardware.bolt.enable = true;
 
-    libinput.enable = true;
+  networking.networkmanager.enable = true;
 
-    xkb.layout = "de";
-    xkb.options = "caps:escape";
-  };
+  powerManagement.enable = true;
 
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
@@ -66,4 +69,7 @@
       emoji = [ "noto-fonts-emoji" "font-awesome" ];
     };
   };
+
+  home-manager.sharedModules = [ flake.inputs.plasma-manager.homeManagerModules.plasma-manager ];
+  home-manager.users.sammy.programs.plasma = import ./plasma-home.nix; 
 }
