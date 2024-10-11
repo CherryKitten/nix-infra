@@ -9,7 +9,7 @@
     telegram-desktop
     mpv
     thunderbird
-    pkgs-unstable.obsidian
+    obsidian
     bluez-tools
     blueman
     pavucontrol
