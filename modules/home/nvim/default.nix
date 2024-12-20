@@ -1,7 +1,7 @@
-{ lib, pkgs, pkgs-unstable, ... }: {
+{ lib, pkgs, ... }: {
   programs.neovim = {
     enable = true;
-    package = pkgs-unstable.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     extraPackages = with pkgs; [
       # LazyVim
       lua-language-server
@@ -109,7 +109,6 @@
 
             { import = "lazyvim.plugins.extras.lang.docker" },
             { import = "lazyvim.plugins.extras.lang.json" },
-            { import = "lazyvim.plugins.extras.lang.markdown" },
             { import = "lazyvim.plugins.extras.lang.python" },
             { import = "lazyvim.plugins.extras.lang.rust" },
             { import = "lazyvim.plugins.extras.lang.tailwind" },

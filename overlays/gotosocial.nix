@@ -1,10 +1,10 @@
 final: prev: {
   gotosocial =
     let
-      version = "0.16.0";
+      version = "0.17.0";
       web-assets = prev.fetchurl {
         url = "https://github.com/superseriousbusiness/gotosocial/releases/download/v${version}/gotosocial_${version}_web-assets.tar.gz";
-        hash = "sha256-aZQpd5KvoZvXEMVzGbWrtGsc+P1JStjZ6U5mX6q7Vb0=";
+        hash = "sha256-ASqPIf98qdnkh3j72ifQN3mWnzNCTRcUegmrStvQ08Q=";
       };
     in
     prev.gotosocial.overrideAttrs {
@@ -14,7 +14,7 @@ final: prev: {
         owner = "superseriousbusiness";
         repo = "gotosocial";
         rev = "refs/tags/v${ version }";
-        hash = "sha256-QoG09+jmq5e5vxDVtkhY35098W/9B1HsYTuUnz43LV4=";
+        hash = "sha256-uyqP3zhjcXKejGFAwZoTn2kY8IpX0QAAXNzb1VG6ve8=";
       };
       postInstall = ''
         tar xf ${web-assets}

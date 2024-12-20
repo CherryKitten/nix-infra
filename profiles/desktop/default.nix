@@ -32,9 +32,9 @@
   services.rpcbind.enable = true; # needed for NFS
 
   # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  services.pipewire.enable = false;
 
   hardware.bluetooth.enable = true;
   services.logind.lidSwitch = "suspend-then-hibernate";
@@ -54,7 +54,7 @@
     packages = with pkgs; [
       jetbrains-mono
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       nerdfonts
       font-awesome
@@ -71,5 +71,5 @@
   };
 
   home-manager.sharedModules = [ flake.inputs.plasma-manager.homeManagerModules.plasma-manager ];
-  home-manager.users.sammy.programs.plasma = import ./plasma-home.nix; 
+  home-manager.users.sammy.programs.plasma = import ./plasma-home.nix;
 }

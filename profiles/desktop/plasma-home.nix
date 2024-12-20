@@ -1,6 +1,10 @@
 {
   enable = true;
 
+  workspace = {
+      wallpaper = ../../files/wallpaper.png;
+    };
+
   shortcuts = {
 
     kwin = {
@@ -51,7 +55,6 @@
         {
           kickoff = {
             sortAlphabetically = true;
-            icon = "nix-snowflake-white";
           };
         }
         "org.kde.plasma.pager"
@@ -59,7 +62,6 @@
           iconTasks = {
             launchers = [
               "applications:org.kde.dolphin.desktop"
-              "applications:org.kde.konsole.desktop"
               "applications:firefox.desktop"
             ];
           };
@@ -69,6 +71,7 @@
           digitalClock = {
             calendar.firstDayOfWeek = "monday";
             time.format = "24h";
+            date.format = "isoDate";
           };
         }
         {
@@ -77,10 +80,9 @@
               "org.kde.plasma.battery"
               "org.kde.plasma.bluetooth"
               "org.kde.plasma.volume"
-            ];
-            hidden = [
               "org.kde.plasma.networkmanagement"
             ];
+            hidden = [];
           };
         }
       ];

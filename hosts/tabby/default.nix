@@ -31,6 +31,8 @@
     discord
     inkscape
     pkgs-unstable.osu-lazer-bin
+    plexamp
+    plex
   ];
 
   programs.steam = {

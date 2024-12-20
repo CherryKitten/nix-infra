@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05-small";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
 
     colmena = {
@@ -9,7 +9,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,12 +43,12 @@
         "aarch64-linux"
       ];
 
-      perSystem = { config, pkgs, ... }: {
+      perSystem = { config, pkgs, system, ... }: {
 
         formatter = pkgs.nixpkgs-fmt;
         devShells =
           let
-            packages = [ pkgs.nix pkgs.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
+            packages = [ pkgs.nix colmena.outputs.packages.${system}.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
           in
           {
             default = pkgs.mkShell {
