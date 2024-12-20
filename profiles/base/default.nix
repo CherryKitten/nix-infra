@@ -104,7 +104,6 @@
   programs.fish.enable = true;
   # Packages used on all systems
   environment.systemPackages = with pkgs; [
-    bat
     bind.dnsutils
     comma
     fd
@@ -116,7 +115,7 @@
     mtr
     nmap
     openssl
-    pinentry
+    pinentry-curses
     rsync
     tcpdump
     tmux

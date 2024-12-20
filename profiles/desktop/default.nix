@@ -13,6 +13,7 @@
     bluez-tools
     blueman
     pavucontrol
+    pinentry-all
   ];
 
   home-manager.users.sammy.services.nextcloud-client.enable = true;
