@@ -33,6 +33,8 @@
     pkgs-unstable.osu-lazer-bin
     plexamp
     plex
+    minikube
+    kubectl
   ];
 
   programs.steam = {
@@ -43,9 +45,11 @@
   services.usbmuxd.enable = true;
 
   environment.systemPackages = with pkgs; [
-  libimobiledevice
-  ifuse # optional, to mount using 'ifuse'
-];
+    libimobiledevice
+    ifuse # optional, to mount using 'ifuse'
+  ];
+
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
