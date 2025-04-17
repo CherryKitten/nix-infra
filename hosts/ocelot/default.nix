@@ -3,10 +3,12 @@
     ./gotosocial.nix
     ../../profiles/hcloud
     ./website.nix
+    ./forgejo.nix
   ];
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
-  fileSystems."/mnt/gts" = { device = "/dev/sdb1"; fsType = "ext4"; };
-  services.restic.backups.default.paths = ["/mnt/gts"];
+  fileSystems."/mnt/gts" = { device = "/dev/disk/by-id/scsi-0HC_Volume_101037584-part1"; fsType = "ext4"; };
+  fileSystems."/mnt/forgejo" = { device = "/dev/disk/by-id/scsi-0HC_Volume_102437928"; fsType = "ext4"; };
+  services.restic.backups.default.paths = [ "/mnt/gts" ];
   cherrykitten.backups.enable = true;
   cherrykitten.network = {
     public_IPv4 = "128.140.109.125";
