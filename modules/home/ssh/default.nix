@@ -63,7 +63,7 @@
       github = {
         host = "gh github github.com";
         user = "git";
-        identityFile = [ "~/.ssh/yubikey.pub" "~/.ssh/yubikey_work.pub" ];
+        identityFile = "~/.ssh/yubikey.pub";
         identitiesOnly = true;
       };
     };
@@ -71,6 +71,5 @@
 
   home.file = {
     ".ssh/yubikey.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZyQSZw+pExsx2RXB+yxbaJGB9mtvudbQ/BP7E1yKvr openpgp:0x6068FEBB";
-    ".ssh/yubikey_work.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtNy5xYn2i1sXnjFmeYu1B87d2JLXcFEGUnmjbi557L openpgp:0x1E9BE982";
   };
 }

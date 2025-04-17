@@ -21,7 +21,6 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
   services.fwupd.enable = true;
 
   services.xserver.xkb.layout = lib.mkForce "us";
@@ -33,8 +32,7 @@
     pkgs-unstable.osu-lazer-bin
     plexamp
     plex
-    minikube
-    kubectl
+    godot_4
   ];
 
   programs.steam = {

@@ -55,14 +55,13 @@
               nativeBuildInputs = packages;
               shellHook = ''
                 export PASSWORD_STORE_DIR=./secrets
-                exec $SHELL'';
+              '';
             };
             hcloud = pkgs.mkShell {
               nativeBuildInputs = packages ++ [ pkgs.hcloud ];
               shellHook = ''
                 export PASSWORD_STORE_DIR=./secrets
                 export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
-                exec $SHELL
               '';
             };
           };

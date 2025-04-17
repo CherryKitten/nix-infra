@@ -12,6 +12,7 @@
       ai = "add -p";
       br = "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
       c = "commit";
+      ca = "commit --amend";
       del = "branch -D";
       p = "push";
       pf = "push --force-with-lease";

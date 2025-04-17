@@ -17,6 +17,7 @@
   ];
 
   home-manager.users.sammy.services.nextcloud-client.enable = true;
+  home-manager.users.sammy.cherrykitten.nvim.minimal = false;
 
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
