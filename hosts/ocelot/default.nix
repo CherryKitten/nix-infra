@@ -4,6 +4,7 @@
     ../../profiles/hcloud
     ./website.nix
     ./forgejo.nix
+    ./miniflux.nix
   ];
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
   fileSystems."/mnt/gts" = { device = "/dev/disk/by-id/scsi-0HC_Volume_101037584-part1"; fsType = "ext4"; };
