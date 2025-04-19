@@ -33,6 +33,7 @@
     plexamp
     plex
     godot_4
+    aseprite
   ];
 
   programs.steam = {
