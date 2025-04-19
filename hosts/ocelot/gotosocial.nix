@@ -16,6 +16,7 @@ in
       instance-expose-suspended = true;
       instance-expose-suspended-web = true;
       accounts-registration-open = false;
+      accounts-allow-custom-css = true;
 
       media-image-max-size = 41943040;
       media-video-max-size = 83886080;
@@ -32,6 +33,7 @@ in
 
       storage-backend = "local";
       storage-local-base-path = "/mnt/gts";
+
     };
   };
 
