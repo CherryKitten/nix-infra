@@ -20,6 +20,7 @@ return {
 			["graphql"] = { "prettier" },
 			["handlebars"] = { "prettier" },
 			["python"] = { "black" },
+      nix = { "nixfmt" },
 		},
 	},
 }

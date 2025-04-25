@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
 
   programs.ssh = {
     enable = true;
@@ -70,6 +71,7 @@
   };
 
   home.file = {
-    ".ssh/yubikey.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZyQSZw+pExsx2RXB+yxbaJGB9mtvudbQ/BP7E1yKvr openpgp:0x6068FEBB";
+    ".ssh/yubikey.pub".text =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZyQSZw+pExsx2RXB+yxbaJGB9mtvudbQ/BP7E1yKvr openpgp:0x6068FEBB";
   };
 }

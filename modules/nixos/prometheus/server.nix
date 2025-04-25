@@ -1,8 +1,15 @@
-{ nodes, lib, config, ... }:
+{
+  nodes,
+  lib,
+  config,
+  ...
+}:
 
-let cfg = config.cherrykitten.prometheus.server;
+let
+  cfg = config.cherrykitten.prometheus.server;
 
-in {
+in
+{
   options.cherrykitten.prometheus.server = {
     enable = lib.mkEnableOption "Prometheus server";
   };
@@ -24,9 +31,14 @@ in {
               regex = "([^:]+)(:[0-9]+)?";
             }
           ];
-          static_configs = [{
-            targets = [ "serval:9100" "ocelot:9100" ];
-          }];
+          static_configs = [
+            {
+              targets = [
+                "serval:9100"
+                "ocelot:9100"
+              ];
+            }
+          ];
         }
       ];
     };

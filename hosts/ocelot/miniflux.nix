@@ -7,7 +7,10 @@ in
 {
   deployment.keys."miniflux_admin" = {
     destDir = "/nix/keys/";
-    keyCommand = [ "pass" "services/miniflux/admin" ];
+    keyCommand = [
+      "pass"
+      "services/miniflux/admin"
+    ];
   };
 
   services.miniflux = {
@@ -19,7 +22,10 @@ in
     adminCredentialsFile = config.deployment.keys."miniflux_admin".path;
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   services.nginx = {
     enable = true;
     virtualHosts = {

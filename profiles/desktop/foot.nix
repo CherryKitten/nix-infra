@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   home-manager.users.sammy.programs.foot = {
     enable = true;
     settings = {

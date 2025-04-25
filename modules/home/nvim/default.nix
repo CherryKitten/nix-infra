@@ -1,4 +1,10 @@
-{ lib, pkgs, pkgs-unstable, config, ... }:
+{
+  lib,
+  pkgs,
+  pkgs-unstable,
+  config,
+  ...
+}:
 let
   minimal = config.cherrykitten.nvim.minimal;
 in
@@ -11,25 +17,28 @@ in
     programs.neovim = {
       enable = true;
       package = pkgs-unstable.neovim-unwrapped;
-      extraPackages = with pkgs; [
-        # Telescope
-        ripgrep
-        fzf
+      extraPackages =
+        with pkgs;
+        [
+          # Telescope
+          ripgrep
+          fzf
 
-      ] ++ lib.lists.optionals (!minimal) [
-        lazygit
-        stylua
-        lua-language-server
-        ansible-language-server
-        nil
-        nixpkgs-fmt
-        # rust
-        rust-analyzer
-        rustfmt
-        # misc
-        nodePackages.prettier
-        marksman
-      ];
+        ]
+        ++ lib.lists.optionals (!minimal) [
+          lazygit
+          stylua
+          lua-language-server
+          ansible-language-server
+          nil
+          nixfmt-rfc-style
+          # rust
+          rust-analyzer
+          rustfmt
+          # misc
+          nodePackages.prettier
+          marksman
+        ];
 
       plugins = with pkgs-unstable.vimPlugins; [
         lazy-nvim
@@ -75,18 +84,46 @@ in
             vim-illuminate
             vim-startuptime
             which-key-nvim
-            { name = "LuaSnip"; path = luasnip; }
-            { name = "catppuccin"; path = catppuccin-nvim; }
-            { name = "mini.ai"; path = mini-nvim; }
-            { name = "mini.bufremove"; path = mini-nvim; }
-            { name = "mini.comment"; path = mini-nvim; }
-            { name = "mini.indentscope"; path = mini-nvim; }
-            { name = "mini.pairs"; path = mini-nvim; }
-            { name = "mini.surround"; path = mini-nvim; }
+            {
+              name = "LuaSnip";
+              path = luasnip;
+            }
+            {
+              name = "catppuccin";
+              path = catppuccin-nvim;
+            }
+            {
+              name = "mini.ai";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.bufremove";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.comment";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.indentscope";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.pairs";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.surround";
+              path = mini-nvim;
+            }
           ];
-          mkEntryFromDrv = drv:
+          mkEntryFromDrv =
+            drv:
             if lib.isDerivation drv then
-              { name = "${lib.getName drv}"; path = drv; }
+              {
+                name = "${lib.getName drv}";
+                path = drv;
+              }
             else
               drv;
           lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
@@ -114,22 +151,19 @@ in
                 { "williamboman/mason.nvim", enabled = false },
           ''
 
-          (lib.strings.optionalString
-            (!minimal)
-            ''
-              { import = "lazyvim.plugins.extras.formatting.black" },
-              { import = "lazyvim.plugins.extras.formatting.prettier" },
-              { import = "lazyvim.plugins.extras.lang.docker" },
-              { import = "lazyvim.plugins.extras.lang.json" },
-              { import = "lazyvim.plugins.extras.lang.python" },
-              { import = "lazyvim.plugins.extras.lang.rust" },
-              { import = "lazyvim.plugins.extras.lang.tailwind" },
-              { import = "lazyvim.plugins.extras.lang.typescript" },
-              { import = "lazyvim.plugins.extras.lang.yaml" },
-              { import = "lazyvim.plugins.extras.linting.eslint" },
-              { import = "lazyvim.plugins.extras.coding.luasnip" },
-            ''
-          )
+          (lib.strings.optionalString (!minimal) ''
+            { import = "lazyvim.plugins.extras.formatting.black" },
+            { import = "lazyvim.plugins.extras.formatting.prettier" },
+            { import = "lazyvim.plugins.extras.lang.docker" },
+            { import = "lazyvim.plugins.extras.lang.json" },
+            { import = "lazyvim.plugins.extras.lang.python" },
+            { import = "lazyvim.plugins.extras.lang.rust" },
+            { import = "lazyvim.plugins.extras.lang.tailwind" },
+            { import = "lazyvim.plugins.extras.lang.typescript" },
+            { import = "lazyvim.plugins.extras.lang.yaml" },
+            { import = "lazyvim.plugins.extras.linting.eslint" },
+            { import = "lazyvim.plugins.extras.coding.luasnip" },
+          '')
 
           ''
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
@@ -150,10 +184,13 @@ in
       let
         parsers = pkgs.symlinkJoin {
           name = "treesitter-parsers";
-          paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-            c
-            lua
-          ])).dependencies;
+          paths =
+            (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+              plugins: with plugins; [
+                c
+                lua
+              ]
+            )).dependencies;
         };
       in
       "${parsers}/parser";

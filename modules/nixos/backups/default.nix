@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.cherrykitten.backups;
   hostname = config.networking.hostName;
@@ -12,15 +17,24 @@ in
     deployment.keys = {
       "restic_env" = {
         destDir = "/root/keys";
-        keyCommand = [ "pass" "hosts/${hostname}/restic/env" ];
+        keyCommand = [
+          "pass"
+          "hosts/${hostname}/restic/env"
+        ];
       };
       "restic_repository_file" = {
         destDir = "/root/keys";
-        keyCommand = [ "pass" "hosts/${hostname}/restic/repository" ];
+        keyCommand = [
+          "pass"
+          "hosts/${hostname}/restic/repository"
+        ];
       };
       "restic_password_file" = {
         destDir = "/root/keys";
-        keyCommand = [ "pass" "hosts/${hostname}/restic/password" ];
+        keyCommand = [
+          "pass"
+          "hosts/${hostname}/restic/password"
+        ];
       };
     };
     services.restic.backups = {

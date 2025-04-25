@@ -1,9 +1,14 @@
-{ ... }: {
+{ ... }:
+{
   programs.git = {
     enable = true;
     extraConfig = {
-      init = { defaultBranch = "main"; };
-      core = { editor = "nvim"; };
+      init = {
+        defaultBranch = "main";
+      };
+      core = {
+        editor = "nvim";
+      };
       pull.rebase = true;
       push.autoSetupRemote = true;
     };

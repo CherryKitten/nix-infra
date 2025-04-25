@@ -1,4 +1,10 @@
-{ pkgs, pkgs-unstable, flake, ... }: {
+{
+  pkgs,
+  pkgs-unstable,
+  flake,
+  ...
+}:
+{
 
   imports = [
     ./foot.nix
@@ -65,10 +71,19 @@
       source-han-serif-japanese
     ];
     fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Source Han Serif" ];
-      sansSerif = [ "Noto Sans" "Source Han Sans" ];
+      serif = [
+        "Noto Serif"
+        "Source Han Serif"
+      ];
+      sansSerif = [
+        "Noto Sans"
+        "Source Han Sans"
+      ];
       monospace = [ "JetBrains Mono" ];
-      emoji = [ "noto-fonts-emoji" "font-awesome" ];
+      emoji = [
+        "noto-fonts-emoji"
+        "font-awesome"
+      ];
     };
   };
 

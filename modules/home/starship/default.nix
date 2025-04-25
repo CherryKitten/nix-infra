@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   programs.starship = {
     enable = true;
     settings = {
@@ -33,7 +34,15 @@
 
       status = {
         symbol = "🔴";
-        format = lib.concatStrings [ "[\\[" "$symbol" "$common_meaning" "$signal_name" "$maybe_int" "\\]]" "($style)" ];
+        format = lib.concatStrings [
+          "[\\["
+          "$symbol"
+          "$common_meaning"
+          "$signal_name"
+          "$maybe_int"
+          "\\]]"
+          "($style)"
+        ];
         map_symbol = true;
         disabled = false;
       };

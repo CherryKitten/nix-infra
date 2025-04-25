@@ -13,7 +13,7 @@ final: prev: {
       src = prev.fetchFromGitHub {
         owner = "superseriousbusiness";
         repo = "gotosocial";
-        rev = "refs/tags/v${ version }";
+        rev = "refs/tags/v${version}";
         hash = "sha256-ioIsa2L1w4z1b7tWFhHScmPwRRq0WLngIdm4r2eCveM=";
       };
       postInstall = ''

@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   services.nginx = {
     enable = true;
     virtualHosts = {

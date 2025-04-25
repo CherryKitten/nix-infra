@@ -1,7 +1,15 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   deployment.keys."root_password_hash" = {
-    keyCommand = [ "pass" "users/root/hashedPassword" ];
+    keyCommand = [
+      "pass"
+      "users/root/hashedPassword"
+    ];
   };
 
   users.users.root = {

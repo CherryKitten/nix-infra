@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   users.users.sammy.packages = with pkgs; [ mako ];
   home-manager.users.sammy = {
     services.mako = {
@@ -8,9 +9,11 @@
       backgroundColor = "#00000070";
       textColor = "#ffffff";
     };
-    wayland.windowManager.sway.config.startup = [{
-      command = "${pkgs.mako}/bin/mako";
-      always = false;
-    }];
+    wayland.windowManager.sway.config.startup = [
+      {
+        command = "${pkgs.mako}/bin/mako";
+        always = false;
+      }
+    ];
   };
 }

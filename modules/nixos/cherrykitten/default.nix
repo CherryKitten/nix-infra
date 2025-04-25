@@ -1,4 +1,9 @@
-{ config, lib, nodes, ... }:
+{
+  config,
+  lib,
+  nodes,
+  ...
+}:
 let
   cfg = config.cherrykitten;
 in
@@ -25,8 +30,8 @@ in
   };
   config = {
     networking.hosts = {
-      "${nodes.ocelot.config.cherrykitten.network.internal_IPv4 }" = [ "ocelot" ];
-      "${nodes.serval.config.cherrykitten.network.internal_IPv4 }" = [ "serval" ];
+      "${nodes.ocelot.config.cherrykitten.network.internal_IPv4}" = [ "ocelot" ];
+      "${nodes.serval.config.cherrykitten.network.internal_IPv4}" = [ "serval" ];
     };
   };
 }

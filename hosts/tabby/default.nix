@@ -2,7 +2,14 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ pkgs, pkgs-unstable, lib, inputs, ... }: {
+{
+  pkgs,
+  pkgs-unstable,
+  lib,
+  inputs,
+  ...
+}:
+{
   imports = [
     ../../profiles/desktop
     ./hardware-configuration.nix
@@ -16,7 +23,12 @@
   fileSystems."/mnt/Media" = {
     device = "192.168.0.3:/mnt/user/Media";
     fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" "noatime" ]; # disconnects after 10 minutes (i.e. 600 seconds)
+    options = [
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=600"
+      "noatime"
+    ]; # disconnects after 10 minutes (i.e. 600 seconds)
   };
 
   # Enable CUPS to print documents.

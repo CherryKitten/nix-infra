@@ -1,8 +1,10 @@
 { lib, config, ... }:
 
-let cfg = config.cherrykitten.prometheus.client;
+let
+  cfg = config.cherrykitten.prometheus.client;
 
-in {
+in
+{
   options.cherrykitten.prometheus.client = {
     enable = lib.mkEnableOption "Prometheus client";
   };
@@ -12,7 +14,13 @@ in {
       node = {
         enable = true;
         port = 9100;
-        enabledCollectors = [ "systemd" "processes" "cpu_vulnerabilities" "mountstats" "network_route" ];
+        enabledCollectors = [
+          "systemd"
+          "processes"
+          "cpu_vulnerabilities"
+          "mountstats"
+          "network_route"
+        ];
         openFirewall = true;
         listenAddress = config.cherrykitten.network.internal_IPv4;
       };

@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   options.cherrykitten.fish = {
     enable = lib.mkEnableOption "Fish Shell";
   } // { default = true; };

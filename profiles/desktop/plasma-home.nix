@@ -2,8 +2,8 @@
   enable = true;
 
   workspace = {
-      wallpaper = ../../files/wallpaper.png;
-    };
+    wallpaper = ../../files/wallpaper.png;
+  };
 
   shortcuts = {
 
@@ -82,7 +82,7 @@
               "org.kde.plasma.volume"
               "org.kde.plasma.networkmanagement"
             ];
-            hidden = [];
+            hidden = [ ];
           };
         }
       ];

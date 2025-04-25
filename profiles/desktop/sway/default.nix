@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
 
   imports = [
     ./mako.nix
@@ -35,20 +36,32 @@
     services.swayidle =
       let
         lockCommand = "${pkgs.writeShellScript "swaylock-command" ''
-        ${pkgs.grim}/bin/grim -t png -l 1 /tmp/lock-screenshot.png
-        ${pkgs.imagemagick}/bin/magick /tmp/lock-screenshot.png -blur 80x40 /tmp/lock-screenshot.png
-        ${pkgs.swaylock}/bin/swaylock -i /tmp/lock-screenshot.png -efFl
-      ''}";
+          ${pkgs.grim}/bin/grim -t png -l 1 /tmp/lock-screenshot.png
+          ${pkgs.imagemagick}/bin/magick /tmp/lock-screenshot.png -blur 80x40 /tmp/lock-screenshot.png
+          ${pkgs.swaylock}/bin/swaylock -i /tmp/lock-screenshot.png -efFl
+        ''}";
       in
       {
         enable = true;
         events = [
-          { event = "before-sleep"; command = lockCommand; }
-          { event = "lock"; command = lockCommand; }
+          {
+            event = "before-sleep";
+            command = lockCommand;
+          }
+          {
+            event = "lock";
+            command = lockCommand;
+          }
         ];
         timeouts = [
-          { timeout = 900; command = lockCommand; }
-          { timeout = 1800; command = "systemctl hybrid-sleep"; }
+          {
+            timeout = 900;
+            command = lockCommand;
+          }
+          {
+            timeout = 1800;
+            command = "systemctl hybrid-sleep";
+          }
         ];
       };
     wayland.windowManager.sway =
@@ -93,49 +106,51 @@
             };
           };
 
-          bars = [{
-            mode = "dock";
-            hiddenState = "hide";
-            position = "bottom";
-            workspaceButtons = true;
-            workspaceNumbers = true;
-            statusCommand = "${pkgs.i3status}/bin/i3status";
-            fonts = {
-              names = [ "JetBrains Mono" ];
-              size = 10.0;
-            };
-            trayOutput = "primary";
-            colors = {
-              background = "#000000";
-              statusline = "#ffffff";
-              separator = "#666666";
-              focusedWorkspace = {
-                border = "#4c7899";
-                background = "#285577";
-                text = "#ffffff";
+          bars = [
+            {
+              mode = "dock";
+              hiddenState = "hide";
+              position = "bottom";
+              workspaceButtons = true;
+              workspaceNumbers = true;
+              statusCommand = "${pkgs.i3status}/bin/i3status";
+              fonts = {
+                names = [ "JetBrains Mono" ];
+                size = 10.0;
               };
-              activeWorkspace = {
-                border = "#333333";
-                background = "#5f676a";
-                text = "#ffffff";
+              trayOutput = "primary";
+              colors = {
+                background = "#000000";
+                statusline = "#ffffff";
+                separator = "#666666";
+                focusedWorkspace = {
+                  border = "#4c7899";
+                  background = "#285577";
+                  text = "#ffffff";
+                };
+                activeWorkspace = {
+                  border = "#333333";
+                  background = "#5f676a";
+                  text = "#ffffff";
+                };
+                inactiveWorkspace = {
+                  border = "#333333";
+                  background = "#222222";
+                  text = "#888888";
+                };
+                urgentWorkspace = {
+                  border = "#2f343a";
+                  background = "#900000";
+                  text = "#ffffff";
+                };
+                bindingMode = {
+                  border = "#2f343a";
+                  background = "#900000";
+                  text = "#ffffff";
+                };
               };
-              inactiveWorkspace = {
-                border = "#333333";
-                background = "#222222";
-                text = "#888888";
-              };
-              urgentWorkspace = {
-                border = "#2f343a";
-                background = "#900000";
-                text = "#ffffff";
-              };
-              bindingMode = {
-                border = "#2f343a";
-                background = "#900000";
-                text = "#ffffff";
-              };
-            };
-          }];
+            }
+          ];
 
           modifier = "Mod4";
           keybindings = {
@@ -148,7 +163,8 @@
               "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
             "${cfg.config.modifier}+Shift+q" = "kill";
 
-            "${cfg.config.modifier}+Shift+s" = "exec ${pkgs.grim}/bin/grim -t png -l 1 -g \"$(${pkgs.slurp}/bin/slurp)\" ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png";
+            "${cfg.config.modifier}+Shift+s" =
+              "exec ${pkgs.grim}/bin/grim -t png -l 1 -g \"$(${pkgs.slurp}/bin/slurp)\" ~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png";
 
             "${cfg.config.modifier}+Left" = "focus left";
             "${cfg.config.modifier}+Down" = "focus down";
@@ -213,10 +229,12 @@
             "${cfg.config.modifier}+r" = "mode resize";
           };
 
-          startup = [{
-            command = "systemctl --user restart nextcloud-client";
-            always = true;
-          }];
+          startup = [
+            {
+              command = "systemctl --user restart nextcloud-client";
+              always = true;
+            }
+          ];
 
         };
 

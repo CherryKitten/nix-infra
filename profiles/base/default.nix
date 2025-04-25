@@ -1,14 +1,26 @@
-{ lib, pkgs, inputs, ... }: {
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [
     ../../users/root
     ../../users/sammy
   ];
 
-
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@wheel" "sammy" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+        "sammy"
+      ];
     };
     gc = {
       automatic = lib.mkDefault true;
@@ -79,7 +91,10 @@
     maxretry = 5;
   };
 
-  services.udev.packages = with pkgs; [ libu2f-host yubikey-personalization ];
+  services.udev.packages = with pkgs; [
+    libu2f-host
+    yubikey-personalization
+  ];
 
   programs.gnupg.agent = {
     enable = true;

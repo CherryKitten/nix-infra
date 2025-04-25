@@ -1,8 +1,11 @@
 { lib, config, ... }:
 
-let cfg = config.cherrykitten.grafana;
+let
+  cfg = config.cherrykitten.grafana;
 
-in with lib; {
+in
+with lib;
+{
   options.cherrykitten.grafana = {
     enable = mkEnableOption "Grafana";
     hostname = mkOption {
@@ -22,7 +25,10 @@ in with lib; {
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
     services.nginx.enable = true;
     services.nginx.virtualHosts.${cfg.hostname} = {
       forceSSL = true;

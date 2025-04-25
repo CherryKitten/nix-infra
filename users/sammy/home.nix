@@ -1,4 +1,5 @@
-{ pkgs, flake, ... }: {
+{ pkgs, flake, ... }:
+{
   imports = (builtins.attrValues flake.homeManagerModules);
 
   programs.git = {
@@ -20,7 +21,6 @@
     package = pkgs.vanilla-dmz;
     name = "Vanilla-DMZ";
   };
-
 
   programs.gpg = {
     enable = true;
