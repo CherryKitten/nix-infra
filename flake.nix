@@ -43,18 +43,37 @@
         "aarch64-linux"
       ];
 
-      perSystem = { config, pkgs, system, ... }: {
+      perSystem = { lib, config, pkgs, system, ... }: {
 
         formatter = pkgs.nixpkgs-fmt;
+
+        packages = {
+          ansible-inventory =
+            let
+              hostInfo = {
+                networking = { hostName = null; domain = null; };
+              };
+              hosts = lib.genAttrs (lib.mapAttrsToList (name: _: name) self.nixosConfigurations) (name: lib.mapAttrsRecursive (path: _: lib.getAttrFromPath path self.nixosConfigurations.${name}.config) hostInfo);
+            in
+            pkgs.writeText "ansible-inventory.json" ''
+              {
+                "all": {
+                  "hosts": ${builtins.toJSON hosts},
+                }
+              }
+            '';
+        };
+
         devShells =
           let
-            packages = [ pkgs.nix colmena.outputs.packages.${system}.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild ];
+            packages = [ pkgs.nix colmena.outputs.packages.${system}.colmena pkgs.just pkgs.git pkgs.home-manager pkgs.pass pkgs.nixos-rebuild pkgs.ansible ];
           in
           {
             default = pkgs.mkShell {
               nativeBuildInputs = packages;
               shellHook = ''
                 export PASSWORD_STORE_DIR=./secrets
+                export ANSIBLE_INVENTORY=${self.packages.${system}.ansible-inventory}
               '';
             };
             hcloud = pkgs.mkShell {
