@@ -64,7 +64,6 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      nerdfonts
       font-awesome
       source-han-sans
       source-han-sans-japanese

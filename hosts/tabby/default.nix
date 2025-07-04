@@ -15,7 +15,6 @@
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.framework-16-7040-amd
   ];
-
   cherrykitten.impermanence.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
