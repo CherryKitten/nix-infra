@@ -63,31 +63,6 @@
 
           formatter = pkgs.nixfmt-rfc-style;
 
-          packages = {
-            ansible-inventory =
-              let
-                hostInfo = {
-                  networking = {
-                    hostName = null;
-                    domain = null;
-                  };
-                };
-                hosts = lib.genAttrs (lib.mapAttrsToList (name: _: name) self.nixosConfigurations) (
-                  name:
-                  lib.mapAttrsRecursive (
-                    path: _: lib.getAttrFromPath path self.nixosConfigurations.${name}.config
-                  ) hostInfo
-                );
-              in
-              pkgs.writeText "ansible-inventory.json" ''
-                {
-                  "all": {
-                    "hosts": ${builtins.toJSON hosts},
-                  }
-                }
-              '';
-          };
-
           devShells =
             let
               packages = [
@@ -98,7 +73,6 @@
                 pkgs.home-manager
                 pkgs.pass
                 pkgs.nixos-rebuild
-                pkgs.ansible
               ];
             in
             {
@@ -106,7 +80,6 @@
                 nativeBuildInputs = packages;
                 shellHook = ''
                   export PASSWORD_STORE_DIR=./secrets
-                  export ANSIBLE_INVENTORY=${self.packages.${system}.ansible-inventory}
                 '';
               };
               hcloud = pkgs.mkShell {
