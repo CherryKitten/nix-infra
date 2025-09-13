@@ -73,8 +73,11 @@
                 pkgs.home-manager
                 pkgs.pass
                 pkgs.nixos-rebuild
+                pkgs.dnscontrol
                 (pkgs.writeShellScriptBin "get-secrets" ''
                   echo export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
+                  echo export NAMECHEAP_USER=$(pass services/namecheap/username)
+                  echo export NAMECHEAP_KEY=$(pass services/namecheap/api_key)
                 '')
               ];
               shellHook = ''

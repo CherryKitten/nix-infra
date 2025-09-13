@@ -1,0 +1,7 @@
+{
+  "namecheap": {
+    "TYPE": "NAMECHEAP",
+    "apikey": "$NAMECHEAP_KEY",
+    "apiuser": "$NAMECHEAP_USER"
+  }
+}
