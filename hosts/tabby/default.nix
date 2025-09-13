@@ -7,6 +7,7 @@
   pkgs-unstable,
   lib,
   inputs,
+  config,
   ...
 }:
 {
@@ -45,6 +46,10 @@
     plex
     godot_4
     aseprite
+    blender-hip
+    distrobox
+    noto-fonts
+    krita
   ];
 
   programs.steam = {
@@ -59,7 +64,12 @@
     ifuse # optional, to mount using 'ifuse'
   ];
 
-  virtualisation.docker.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
+
+
