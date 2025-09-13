@@ -6,9 +6,10 @@
     ./website.nix
     ./forgejo.nix
     ./miniflux.nix
+    ./matrix.nix
   ];
   fileSystems."/" = {
-    device = "/dev/sda1";
+    device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_44711803-part1";
     fsType = "ext4";
   };
   fileSystems."/mnt/gts" = {
@@ -17,6 +18,10 @@
   };
   fileSystems."/mnt/forgejo" = {
     device = "/dev/disk/by-id/scsi-0HC_Volume_102437928";
+    fsType = "ext4";
+  };
+  fileSystems."/mnt/matrix" = {
+    device = "/dev/disk/by-id/scsi-0HC_Volume_102990018";
     fsType = "ext4";
   };
   services.restic.backups.default.paths = [ "/mnt/gts" ];

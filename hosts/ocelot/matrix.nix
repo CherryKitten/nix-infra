@@ -1,8 +1,21 @@
-{ ... }:
+{ config, ... }:
+
 {
+
+  deployment.keys."matrix_secret_config" = {
+    destDir = "/mnt/matrix/keys/";
+    keyCommand = [
+      "pass"
+      "hosts/ocelot/matrix_secret_config"
+    ];
+    user = "matrix-synapse";
+    group = "matrix-synapse";
+  };
+
   services.matrix-synapse = {
     enable = true;
     dataDir = "/mnt/matrix/synapse/";
+    extraConfigFiles = [ config.deployment.keys."matrix_secret_config".path ];
     settings = {
       server_name = "cherrykitten.gay";
       max_upload_size = "200M";
@@ -55,11 +68,12 @@
         forceSSL = true;
         enableACME = true;
         locations = {
-          ".well-known/matrix/server" = {
-            return = "200 {\"m.server\": \"chat.cherrykitten.dev:443\"}";
+          "/.well-known/matrix/server" = {
+            return = "200 '{\"m.server\": \"matrix.cherrykitten.gay:443\"}'";
           };
-          ".well-known/matrix/client" = {
-            return = "200 {\"m.homeserver\": {\"base_url\": \"https://chat.cherrykitten.gay:443\"}}";
+          "/.well-known/matrix/client" = {
+            return = "200 '{\"m.homeserver\": {\"base_url\": \"https://matrix.cherrykitten.gay:443\"}}'";
+            extraConfig = "add_header Access-Control-Allow-Origin *;";
           };
         };
       };
