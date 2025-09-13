@@ -2,7 +2,7 @@
   enable = true;
 
   workspace = {
-    wallpaper = ../../files/wallpaper.png;
+    wallpaper = ../../../../../files/wallpaper.png;
   };
 
   shortcuts = {

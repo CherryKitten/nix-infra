@@ -44,7 +44,6 @@ in
           {
             imports = [
               ./hosts/${name}
-              ./profiles/base
               (import ./overlays)
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence

@@ -26,7 +26,7 @@
     enable = true;
     publicKeys = [
       {
-        source = ../../files/cherrykitten.pgp;
+        source = ../../../../../files/cherrykitten.pgp;
         trust = "ultimate";
       }
 

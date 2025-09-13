@@ -1,9 +1,16 @@
 { lib, config, ... }:
 {
   imports = [
-    ../../profiles/hcloud
     ./gotosocial.nix
   ];
+
+  cherrykitten.profile = "hcloud";
+  cherrykitten.network = {
+    public_IPv4 = "5.75.143.135";
+    public_IPv6 = "2a01:4f8:1c1b:4c9f::1";
+    internal_IPv4 = "10.69.0.3";
+    internal_IPv6 = "fe80::8400:ff:feba:7ef7";
+  };
 
   fileSystems."/" = {
     device = "/dev/sda1";
@@ -27,17 +34,13 @@
       eth0 = {
         ipv4.addresses = [
           {
-            address = "5.75.143.135";
+            address = config.cherrykitten.network.public_IPv4;
             prefixLength = 32;
           }
         ];
         ipv6.addresses = [
           {
-            address = "2a01:4f8:1c1b:4c9f::1";
-            prefixLength = 64;
-          }
-          {
-            address = "fe80::9400:4ff:fe5d:e075";
+            address = config.cherrykitten.network.public_IPv6;
             prefixLength = 64;
           }
         ];
@@ -57,7 +60,7 @@
       enp7s0 = {
         ipv4.addresses = [
           {
-            address = "10.69.0.3";
+            address = config.cherrykitten.network.internal_IPv4;
             prefixLength = 32;
           }
         ];

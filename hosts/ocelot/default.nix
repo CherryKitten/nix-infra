@@ -2,12 +2,12 @@
 {
   imports = [
     ./gotosocial.nix
-    ../../profiles/hcloud
     ./website.nix
     ./forgejo.nix
     ./miniflux.nix
     ./matrix.nix
   ];
+  cherrykitten.profile = "hcloud";
   fileSystems."/" = {
     device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_44711803-part1";
     fsType = "ext4";

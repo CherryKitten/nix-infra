@@ -1,6 +1,6 @@
 { lib, config, ... }:
 {
-  imports = [ ../../profiles/hcloud ];
+  cherrykitten.profile = "hcloud";
 
   fileSystems."/" = {
     device = "/dev/sda1";
