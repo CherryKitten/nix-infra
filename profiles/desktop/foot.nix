@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       main = {
-        font = "JetBrains Mono:size=8";
+        font = "Hack Nerd Font :size=8";
         dpi-aware = "yes";
         initial-window-size-pixels = "1920x1080";
       };

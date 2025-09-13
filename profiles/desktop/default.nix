@@ -40,9 +40,13 @@
   services.rpcbind.enable = true; # needed for NFS
 
   # Enable sound.
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  services.pipewire.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 
   hardware.bluetooth.enable = true;
   services.logind.lidSwitch = "suspend-then-hibernate";
@@ -68,6 +72,7 @@
       source-han-sans
       source-han-sans-japanese
       source-han-serif-japanese
+      nerd-fonts.hack
     ];
     fontconfig.defaultFonts = {
       serif = [
