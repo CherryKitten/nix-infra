@@ -1,6 +1,6 @@
 [submodule "nixos-infect"]
 	path = misc/nixos-infect
-	url = ../nixos-infect
+	url = git@git.cherrykitten.dev:sammy/nixos-infect
 	branch = sammy
 [submodule "secrets"]
 	path = secrets
