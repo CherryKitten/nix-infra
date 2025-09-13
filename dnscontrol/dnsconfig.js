@@ -29,14 +29,10 @@ D("cherrykitten.xyz", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
 );
 
 D("cherrykitten.dev", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
-    A("@", OCELOT_v4),
-    AAAA("@", OCELOT_v6),
-    A("git", OCELOT_v4),
-    AAAA("git", OCELOT_v6),
-    A("graph", SERVAL_v4),
-    AAAA("graph", SERVAL_v6),
-    A("rss", OCELOT_v4),
-    AAAA("rss", OCELOT_v6),
+    ALIAS("@", "ocelot.cherrykitten.xyz."),
+    CNAME("git", "ocelot.cherrykitten.xyz."),
+    CNAME("rss", "ocelot.cherrykitten.xyz."),
+    CNAME("graph", "serval.cherrykitten.xyz."),
     URL301("blog", "https://cherrykitten.dev/blog/"),
     FASTMAIL_RECORDS("cherrykitten.dev"),
 );
@@ -47,10 +43,8 @@ D("catgirls.love", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
 );
 
 D("cherrykitten.gay", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
-    A("@", OCELOT_v4, TTL(60)),
-    AAAA("@", OCELOT_v6, TTL(60)),
-    A("matrix", OCELOT_v4),
-    AAAA("matrix", OCELOT_v6),
+    ALIAS("@", "ocelot.cherrykitten.xyz."),
+    CNAME("matrix", "ocelot.cherrykitten.xyz."),
 );
 
 D("sammy.moe", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
@@ -58,6 +52,5 @@ D("sammy.moe", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
 );
 
 D("thebleakest.link", REG_NAMECHEAP, DnsProvider(DSP_NAMECHEAP),
-    A("@", MUNCHKIN_v4),
-    AAAA("@", MUNCHKIN_v6),
+    ALIAS("@", "munchkin.cherrykitten.xyz."),
 );
