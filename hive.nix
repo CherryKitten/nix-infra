@@ -7,7 +7,10 @@
 let
   inherit (inputs) nixpkgs nixpkgs-unstable;
   inherit (self) outputs;
-  pkgs = import nixpkgs { system = "x86_64-linux"; };
+  pkgs = import nixpkgs {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
   pkgs-unstable = import nixpkgs-unstable {
     system = "x86_64-linux";
     config.allowUnfree = true;
@@ -45,7 +48,8 @@ in
               (import ./overlays)
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
-            ] ++ builtins.attrValues self.nixosModules;
+            ]
+            ++ builtins.attrValues self.nixosModules;
 
             config = {
               networking.hostName = name;
@@ -67,14 +71,6 @@ in
 
     colmenaHive = inputs.colmena.lib.makeHive colmena;
 
-    nixosConfigurations = {
-      iso = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          ./profiles/iso
-        ];
-      };
-    } // colmenaHive.nodes;
+    nixosConfigurations = colmenaHive.nodes;
   };
 }

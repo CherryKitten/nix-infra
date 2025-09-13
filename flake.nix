@@ -63,8 +63,8 @@
 
           formatter = pkgs.nixfmt-rfc-style;
 
-          devShells =
-            let
+          devShells = {
+            default = pkgs.mkShell {
               packages = [
                 pkgs.nix
                 colmena.outputs.packages.${system}.colmena
@@ -73,27 +73,18 @@
                 pkgs.home-manager
                 pkgs.pass
                 pkgs.nixos-rebuild
+                (pkgs.writeShellScriptBin "get-secrets" ''
+                  echo export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
+                '')
               ];
-            in
-            {
-              default = pkgs.mkShell {
-                nativeBuildInputs = packages;
-                shellHook = ''
-                  export PASSWORD_STORE_DIR=./secrets
-                '';
-              };
-              hcloud = pkgs.mkShell {
-                nativeBuildInputs = packages ++ [ pkgs.hcloud ];
-                shellHook = ''
-                  export PASSWORD_STORE_DIR=./secrets
-                  export HCLOUD_TOKEN=$(pass services/hcloud/api_token)
-                '';
-              };
+              shellHook = ''
+                export PASSWORD_STORE_DIR=./secrets
+              '';
             };
+          };
         };
 
       flake = {
-
         nixosModules = builtins.listToAttrs (
           map (x: {
             name = x;
@@ -107,8 +98,6 @@
             value = import (./modules/home + "/${name}");
           }) (builtins.attrNames (builtins.readDir ./modules/home))
         );
-
-        packages.x86_64-linux.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
       };
     };
 }
