@@ -31,6 +31,7 @@
   users.mutableUsers = true;
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = ".bak";
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
 
